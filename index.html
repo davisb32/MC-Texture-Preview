@@ -4,6 +4,43 @@ main{grid-template-columns:340px minmax(0,1fr)}aside{padding-top:20px}h1{font-si
 
 #browseBlockLibrary{width:100%;background:#2f4228;color:#d7edc1;border-color:#576e47;font-size:12px;margin:0 0 14px}.material.selected-slot{border-color:#b2d58f;box-shadow:0 0 0 1px #91b16d}.material .replace{cursor:pointer;padding:3px 0 3px 5px}.material .replace:hover{color:#e2f5cd}.library-drawer{min-width:0;display:flex;flex-direction:column;padding:20px 16px 12px;background:#19211a;border-left:1px solid #35442f;min-height:0;overflow:hidden}.library-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.library-heading h2{font-size:21px;letter-spacing:-.5px;margin:3px 0 0;font-weight:600}.library-heading>button{font-size:23px;padding:1px 10px;border:0}.library-target{font-size:9px;letter-spacing:1.3px;color:#98ad8e;display:flex;flex-direction:column;gap:7px}.library-target select{font-size:11px;letter-spacing:0;max-width:100%}#librarySearch{margin:14px 0 10px;background:#101910;border:1px solid #475b3d;border-radius:6px;color:#edf1eb;padding:10px 11px;font-size:12px;width:100%;outline-offset:2px}.library-filters{display:flex;align-items:end;gap:12px;margin-bottom:9px}.library-filters>label:first-child{display:flex;flex-direction:column;gap:4px;font-size:9px;color:#a3b899}.library-filters select{font-size:10px;padding:5px 7px}.library-check{display:flex;align-items:center;gap:5px;font-size:10px;color:#b9c9af;white-space:nowrap;margin-bottom:5px}.library-check input{accent-color:#c5e79c}.library-status{font-size:10px;color:#a1b696;margin:7px 0 12px;min-height:15px}.library-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;overflow:auto;align-content:start;flex:1;min-height:0;padding:2px 3px 5px 1px}.library-card{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;padding:9px 3px 7px;background:#212d20;border:1px solid #394c31;border-radius:6px;text-align:center}.library-card:hover{border-color:#b7d895;background:#34462a}.library-card img{width:40px;height:40px;image-rendering:pixelated;background:repeating-conic-gradient(#313c2d 0% 25%,#1c281a 0% 50%) 0/8px 8px}.library-card .block-name{font-size:8px;line-height:1.3;min-height:22px;overflow-wrap:anywhere;color:#d8e4ce}.library-card:active{cursor:grabbing}.library-card[draggable=true]{cursor:grab}.library-empty{padding:15px 12px;background:#111c12;border:1px dashed #526749;border-radius:7px;color:#adbea3;font-size:11px;line-height:1.7}.library-empty p{margin:8px 0}.library-empty code{font-size:10px;color:#d0e2c2}.library-empty strong{color:#dbeccc}.library-bottom{display:flex;flex-wrap:wrap;gap:6px;padding-top:15px;margin-top:auto}.library-bottom button{font-size:10px;padding:7px 8px}#createTextureList{background:#c5e79c;color:#172112;border-color:#c5e79c}.library-note{font-size:9px;line-height:1.65;color:#8fa483;margin:10px 0 0}main.library-open{grid-template-columns:340px minmax(250px,1fr) 335px}.library-card.invalid{display:none}@media(max-width:1200px){main.library-open{grid-template-columns:305px minmax(0,1fr)}.library-drawer{position:fixed;right:0;top:76px;bottom:0;width:335px;z-index:8;box-shadow:-12px 0 40px #0005}}@media(max-width:680px){.library-drawer{top:64px;width:min(370px,100vw)}main.library-open{display:flex}.library-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.library-card .block-name{font-size:9px}.library-target select{font-size:12px}.library-bottom button{font-size:11px}}
 
+
+/* Full-bleed texture grids: no tile padding, borders, corner radius, or gutters. */
+#palette,#libraryGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:0;padding:0;align-content:start;overflow-x:hidden}
+#palette .material,#libraryGrid .library-card{display:block;position:relative;aspect-ratio:1;width:100%;height:auto;min-height:0;margin:0;padding:0;gap:0;border:0;border-radius:0;background:transparent;box-shadow:none;overflow:hidden;opacity:1}
+#palette .material img,#libraryGrid .library-card img{display:block;position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;border-radius:0;object-fit:fill;image-rendering:pixelated;background:repeating-conic-gradient(#313c2d 0% 25%,#1c281a 0% 50%) 0/8px 8px}
+#palette .material .swatch,#palette .material .text,#palette .material .replace,#libraryGrid .library-card .block-name{display:none}
+#palette .material::after,#libraryGrid .library-card::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border:0 solid transparent}
+#palette .material:hover::after,#palette .material:focus-visible::after,#libraryGrid .library-card:hover::after,#libraryGrid .library-card:focus-visible::after{border-width:2px;border-color:#e2f5c9}
+#palette .material.selected-slot::after{border-width:2px;border-color:#b7e48b}
+#palette .material.drag::after{border-width:3px;border-color:#fff}
+#palette .material:focus-visible,#libraryGrid .library-card:focus-visible{outline:0}
+.palette-inspector{display:flex;align-items:center;gap:10px;min-height:55px;padding:10px 0 0}
+.palette-inspector>div{flex:1;min-width:0}.palette-inspector strong{display:block;font-size:11px;font-weight:550;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.palette-inspector span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+#paletteUpload{flex:none;font-size:10px;padding:6px 8px}
+
+.library-hover-name{height:36px;flex:none;display:flex;align-items:center;font-size:12px;line-height:16px;color:#e5f0dd;margin:0 0 7px;overflow:hidden;overflow-wrap:anywhere}
+
+.library-hover-name{position:fixed;z-index:1000;display:block;width:max-content;max-width:min(260px,calc(100vw - 16px));height:auto;min-height:0;margin:0;padding:4px 8px;background:rgba(31,25,49,.96);color:#fff;border:1px solid #62557a;border-radius:4px;box-shadow:0 2px 8px #0007;font-size:12px;font-weight:500;line-height:16px;pointer-events:none;overflow:visible;overflow-wrap:anywhere}
+.library-hover-name[hidden]{display:none}
+
+/* Keep the block picker immediately beside its destination palette. */
+main{--palette-width:340px}
+main.library-open{grid-template-columns:var(--palette-width) 335px minmax(0,1fr)}
+main.library-open>aside{grid-column:1;grid-row:1}
+main.library-open>.library-drawer{grid-column:2;grid-row:1;position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;max-width:none;z-index:8;box-shadow:none;border-right:1px solid #35442f}
+main.library-open>.workspace{grid-column:3;grid-row:1}
+@media(max-width:1200px){
+ main.library-open{grid-template-columns:var(--palette-width) minmax(0,1fr)}
+ main.library-open>.workspace{grid-column:2}
+ main.library-open>.library-drawer{position:fixed;left:var(--palette-width);right:auto;top:76px;bottom:0;width:335px;max-width:calc(100vw - var(--palette-width));box-shadow:10px 0 30px #0004}
+}
+@media(max-width:1000px){main{--palette-width:305px}}
+@media(max-width:680px){
+ main.library-open{display:flex}
+ main.library-open>.library-drawer{position:relative;left:auto;right:auto;top:auto;bottom:auto;order:3;flex:none;width:100%;max-width:none;height:65dvh;min-height:360px;border-left:0;border-top:1px solid #35442f;box-shadow:none}
+}
+
 </style></head>
 <body>
 <header><a class="brand" href="#" aria-label="Litho Block Viewer"><span class="mark">▧</span><span>LITHO <small>BLOCK VIEWER</small></span></a><span class="local"><i></i> Your image stays on your device</span><div class="header-actions"><button id="openProject">Open project</button><button id="saveProject">Save project <span>↗</span></button></div></header>
@@ -44,7 +81,7 @@ main{grid-template-columns:340px minmax(0,1fr)}aside{padding-top:20px}h1{font-si
 <button id="browseBlockLibrary">▦ Browse block library</button>
 <div class="section-top palette-heading"><span class="eyebrow">MATERIAL PALETTE</span><span class="step">02</span></div>
 <div class="palette-help">Click a slot to choose a block, or drag a block from the library. Matching shades keep their textures on image import.</div>
-<div id="palette"></div>
+<div id="palette"></div><div class="palette-inspector"><div><strong id="paletteBlockName">Select a texture</strong><span id="paletteBlockStats">Hover over a tile for details.</span></div><button id="paletteUpload" title="Upload a PNG for the selected grayscale slot">Upload PNG…</button></div>
 <div id="demoNote" class="note">Sample textures are illustrative. Replace them with your Minecraft textures for an accurate preview.</div>
 </section>
 <div class="sidebar-bottom"><button id="demo">Load castle demo</button><button id="help">How it works <span>?</span></button></div>
@@ -60,6 +97,7 @@ main{grid-template-columns:340px minmax(0,1fr)}aside{padding-top:20px}h1{font-si
 <input id="librarySearch" type="search" placeholder="Search block names…" aria-label="Search block names" autocomplete="off">
 <div class="library-filters"><label>Sort<select id="librarySort"><option value="name">Name A–Z</option><option value="dark">Dark → light</option><option value="light">Light → dark</option></select></label><label class="library-check"><input type="checkbox" id="libraryOpaque"> Solid faces only</label></div>
 <p id="libraryStatus" class="library-status" role="status">Open the library to load your textures.</p>
+
 <div id="libraryGrid" class="library-grid"></div>
 <div id="libraryEmpty" class="library-empty" hidden><strong>No texture list yet.</strong><p>Select your textures folder below. The app will create <code>index.json</code> for you. Upload that file inside your <code>textures</code> folder beside the PNGs.</p><p>Expected: <code>textures/stone.png</code> and <code>textures/index.json</code>, with your HTML one level above.</p></div>
 <div class="library-bottom"><button id="createTextureList">Create texture list…</button><button id="reloadLibrary">Reload</button><button id="libraryUpload">Upload one PNG…</button></div>
@@ -68,9 +106,10 @@ main{grid-template-columns:340px minmax(0,1fr)}aside{padding-top:20px}h1{font-si
 </section>
 
 </main>
+<div id="libraryHoverName" class="library-hover-name" aria-label="Block name" hidden></div>
 <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,image/avif" hidden><input type="file" id="textureInput" accept="image/png" hidden><input type="file" id="projectInput" accept=".json,application/json" hidden>
 <div id="toast" role="status" aria-live="polite"></div>
-<dialog id="helpDialog"><button class="close" id="closeHelp" aria-label="Close">×</button><span class="eyebrow">FROM BLUEPRINT TO BLOCKS</span><h2>A wall, without the guesswork.</h2><ol><li>Import a photo or a grayscale PNG. Its width and height become the wall dimensions in blocks; the app never silently resizes it. In Image adjustments, enable quantization to edit levels, grain and dithering.</li><li>Open Block library or click a palette slot, then click or drag a thumbnail to assign it. The ↥ icon still lets you upload an individual PNG. The library reads textures/index.json and the PNGs listed there.</li><li>Load another image anytime: exact grayscale matches keep their textures. New shades start white. While quantization is enabled, all selected shades stay in the palette even if some have zero pixels, so their textures survive adjustments. Changing the number of steps keeps exact grayscale matches.</li><li>Scroll to zoom and drag to pan. Close up, pixels stay sharp. At a distance, the real texture colors blend smoothly.</li></ol><p>Transparent image pixels become empty space. Square power-of-two textures from 8–256 pixels are supported; mixed sizes are normalized to the largest size.</p><p><strong>Save project</strong> includes the original source, image adjustments, textures and view. Existing project files still open. <strong>Grayscale PNG</strong> downloads the adjusted grayscale image at its original dimensions. <strong>Block PNG</strong> exports the full textured wall. Neither export includes grids or clip-warning colors.</p><p>To set up the hosted block library, put your 16×16 PNGs in a textures folder next to this HTML. In the library, click Create texture list and select that folder. Save the generated index.json inside textures and upload the entire folder beside the HTML. For a local test, selecting the folder also loads its textures immediately.</p><p>Blur is applied first, before levels, grain, dithering and quantization. Its radius is measured in source-image pixels. Set it to zero to preserve original sharpness. The Source image view always shows the unblurred original.</p><p>Clip warning shows final output black in blue and final output white in red. Grain uses a stable seed; Reseed changes its pattern. Transparent source pixels below 50% opacity become empty space. Auto range stretches the source histogram to black and white. A flat image may use fewer shades than selected; no fake pixels are added.</p><p class="note">This is a flat texture preview. Game lighting, shaders, and randomized block-face variants are not simulated.</p></dialog>
+<dialog id="helpDialog"><button class="close" id="closeHelp" aria-label="Close">×</button><span class="eyebrow">FROM BLUEPRINT TO BLOCKS</span><h2>A wall, without the guesswork.</h2><ol><li>Import a photo or a grayscale PNG. Its width and height become the wall dimensions in blocks; the app never silently resizes it. In Image adjustments, enable quantization to edit levels, grain and dithering.</li><li>Open Block library or click a palette slot, then click or drag a thumbnail to assign it. The Upload PNG button below the palette still lets you upload an individual texture. The library reads textures/index.json and the PNGs listed there.</li><li>Load another image anytime: exact grayscale matches keep their textures. New shades start white. While quantization is enabled, all selected shades stay in the palette even if some have zero pixels, so their textures survive adjustments. Changing the number of steps keeps exact grayscale matches.</li><li>Scroll to zoom and drag to pan. Close up, pixels stay sharp. At a distance, the real texture colors blend smoothly.</li></ol><p>Transparent image pixels become empty space. Square power-of-two textures from 8–256 pixels are supported; mixed sizes are normalized to the largest size.</p><p><strong>Save project</strong> includes the original source, image adjustments, textures and view. Existing project files still open. <strong>Grayscale PNG</strong> downloads the adjusted grayscale image at its original dimensions. <strong>Block PNG</strong> exports the full textured wall. Neither export includes grids or clip-warning colors.</p><p>To set up the hosted block library, put your 16×16 PNGs in a textures folder next to this HTML. In the library, click Create texture list and select that folder. Save the generated index.json inside textures and upload the entire folder beside the HTML. For a local test, selecting the folder also loads its textures immediately.</p><p>Blur is applied first, before levels, grain, dithering and quantization. Its radius is measured in source-image pixels. Set it to zero to preserve original sharpness. The Source image view always shows the unblurred original.</p><p>Clip warning shows final output black in blue and final output white in red. Grain uses a stable seed; Reseed changes its pattern. Transparent source pixels below 50% opacity become empty space. Auto range stretches the source histogram to black and white. A flat image may use fewer shades than selected; no fake pixels are added.</p><p class="note">This is a flat texture preview. Game lighting, shaders, and randomized block-face variants are not simulated.</p></dialog>
 <script>
 function analyzePixels(data, width, height) {
   const colors = new Map();
@@ -201,14 +240,22 @@ async function rebuildMaterials(){
  const assigned=state.palette.filter(p=>p.key!=='air'&&p.url).length,total=state.palette.filter(p=>p.key!=='air').length;status(`${assigned} / ${total} materials assigned`);schedule();
 }
 function renderPalette(){
- $('palette').replaceChildren();for(let i=0;i<state.palette.length;i++){
-  const p=state.palette[i],b=document.createElement('button');b.className='material'+(p.key==='air'?' empty':p.count===0?' unused':'')+(!$('libraryDrawer').hidden&&libraryTargetKey===p.key?' selected-slot':'');b.title=p.key==='air'?'Transparent pixels leave empty space':'Choose from block library, drag a block here, or use ↥ to upload a PNG';
+ refreshLibrarySlots();$('palette').replaceChildren();for(let i=0;i<state.palette.length;i++){
+  const p=state.palette[i],b=document.createElement('button');b.className='material'+(p.key==='air'?' empty':p.count===0?' unused':'')+(libraryTargetKey===p.key?' selected-slot':'');b.title=p.key==='air'?`Empty space · ${p.count.toLocaleString()} pixels`:`${p.url?p.name:'Unassigned texture'} · Gray ${p.gray} · ${p.count.toLocaleString()} blocks\nClick to choose a block or drop a texture here.`;b.setAttribute('aria-label',b.title);b.onmouseenter=()=>updatePaletteDetails(p);b.onmouseleave=()=>updatePaletteDetails();b.onfocus=()=>updatePaletteDetails(p);b.onblur=()=>updatePaletteDetails();
   const sw=document.createElement('span');sw.className='swatch';sw.style.background=p.key==='air'?'repeating-conic-gradient(#555 0% 25%,#222 0% 50%) 0 / 8px 8px':`rgb(${p.gray} ${p.gray} ${p.gray})`;
   const img=document.createElement('img');img.src=p.url||fallback(p,16).toDataURL();img.alt='';const text=document.createElement('span');text.className='text';const title=document.createElement('strong');title.textContent=p.key!=='air'&&!p.url?'Choose texture · white placeholder':p.name;const sub=document.createElement('small');sub.textContent=p.key==='air'?`${p.count.toLocaleString()} empty pixels`:`Gray ${p.gray} · ${p.count.toLocaleString()} blocks${p.count===0?' · kept for edits':''}`;text.append(title,sub);const change=document.createElement('span');change.className='replace';change.textContent=p.key==='air'?'':'↥';change.title='Upload a texture PNG for this slot';b.append(sw,img,text,change);
   if(p.key!=='air'){b.onclick=()=>openBlockLibrary(p.key);change.onclick=e=>{e.stopPropagation();selected=i;$('textureInput').dataset.shade=p.key;$('textureInput').click();};drop(b,file=>safely(()=>assignTexture(i,file)),id=>assignLibraryToShade(p.key,id));}else b.disabled=true;$('palette').append(b);
  }
- const demo=state.palette.some(p=>p.demo);$('demoNote').hidden=!demo;refreshLibrarySlots();
+ const demo=state.palette.some(p=>p.demo);$('demoNote').hidden=!demo;updatePaletteDetails();
 }
+function updatePaletteDetails(p=null){
+ p=p||state?.palette.find(p=>p.key===libraryTargetKey)||state?.palette.find(p=>p.key!=='air')||state?.palette[0];
+ if(!p)return;
+ $('paletteBlockName').textContent=p.key==='air'?'Empty / transparent':p.url?p.name:'Unassigned texture';
+ $('paletteBlockStats').textContent=p.key==='air'?`${p.count.toLocaleString()} empty pixels`:`Gray ${p.gray} · ${p.count.toLocaleString()} blocks`;
+ $('paletteUpload').disabled=p.key==='air';
+}
+
 function drop(element,fn,onLibrary=null){
  element.addEventListener('dragover',e=>{e.preventDefault();e.stopPropagation();element.classList.add('drag');});element.addEventListener('dragleave',()=>element.classList.remove('drag'));
  element.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();element.classList.remove('drag');const id=e.dataTransfer.getData(LIBRARY_MIME);if(id&&onLibrary){onLibrary(id);return;}const f=e.dataTransfer.files[0];if(f)fn(f);});
@@ -395,7 +442,7 @@ function openBlockLibrary(shade=null){
  if(shade!==null)libraryTargetKey=shade;showPanel('materials');$('libraryDrawer').hidden=false;document.querySelector('main').classList.add('library-open');refreshLibrarySlots();renderPalette();schedule();
  if(!libraryLoaded&&!libraryLoading)loadBlockLibrary();
 }
-function closeBlockLibrary(){$('libraryDrawer').hidden=true;document.querySelector('main').classList.remove('library-open');renderPalette();schedule();}
+function closeBlockLibrary(){hideLibraryName();$('libraryDrawer').hidden=true;document.querySelector('main').classList.remove('library-open');renderPalette();schedule();}
 function filteredLibrary(entries,query,sort,opaqueOnly){
  const words=query.trim().toLowerCase().split(/\s+/).filter(Boolean);
  return entries.filter(e=>e.valid!==false&&(!opaqueOnly||e.opaque!==false)&&words.every(w=>(e.name+' '+e.file).toLowerCase().includes(w))).sort((a,b)=>{
@@ -403,15 +450,25 @@ function filteredLibrary(entries,query,sort,opaqueOnly){
   return a.name.localeCompare(b.name,undefined,{numeric:true});
  });
 }
+function hideLibraryName(){const label=$('libraryHoverName');label.hidden=true;label.textContent='';}
+function showLibraryName(name,card){
+ const label=$('libraryHoverName'),rect=card.getBoundingClientRect(),grid=$('libraryGrid').getBoundingClientRect();
+ label.textContent=name;label.hidden=false;
+ const width=label.offsetWidth||Math.min(260,name.length*7+18),height=label.offsetHeight||26;
+ const vw=window.innerWidth||1200,vh=window.innerHeight||800;
+ label.style.left=Math.max(8,Math.min(rect.left+5,vw-width-8))+'px';
+ label.style.top=Math.max(8,Math.min(Math.max(rect.top+5,grid.top+3),vh-height-8))+'px';
+}
+
 function renderBlockLibrary(){
- const grid=$('libraryGrid');if(!grid)return;const scroll=grid.scrollTop;grid.replaceChildren();
+ const grid=$('libraryGrid');if(!grid)return;hideLibraryName();const scroll=grid.scrollTop;grid.replaceChildren();
  const visible=filteredLibrary(blockLibrary,$('librarySearch').value,$('librarySort').value,$('libraryOpaque').checked);
  for(const entry of visible){
-  const card=document.createElement('button');card.className='library-card';card.draggable=true;card.title=`${entry.name}\n${entry.file}\nClick to assign or drag onto a palette slot.`;card.dataset.block=entry.id;
+  const card=document.createElement('button');card.className='library-card';card.draggable=true;card.onmouseenter=card.onfocus=()=>showLibraryName(entry.name,card);card.onmouseleave=card.onblur=hideLibraryName;card.dataset.block=entry.id;card.setAttribute('aria-label',entry.name);
   const img=document.createElement('img');img.src=libraryImageURL(entry);img.alt='';img.loading='lazy';img.decoding='async';img.draggable=false;
   const name=document.createElement('span');name.className='block-name';name.textContent=entry.name;card.append(img,name);
   card.onclick=()=>assignLibraryToShade(libraryTargetKey,entry.id);
-  card.addEventListener('dragstart',e=>{e.dataTransfer.effectAllowed='copy';e.dataTransfer.setData(LIBRARY_MIME,entry.id);e.dataTransfer.setData('text/plain',entry.name);});
+  card.addEventListener('dragstart',e=>{hideLibraryName();e.dataTransfer.effectAllowed='copy';e.dataTransfer.setData(LIBRARY_MIME,entry.id);e.dataTransfer.setData('text/plain',entry.name);});
   grid.append(card);
  }
  grid.scrollTop=scroll;
@@ -476,6 +533,8 @@ async function createTextureList(files){
  finally{libraryLoading=false;}
 }
 function connectBlockLibrary(){
+ $('libraryGrid').addEventListener('scroll',hideLibraryName,{passive:true});window.addEventListener('resize',hideLibraryName);
+ $('paletteUpload').onclick=()=>{if(!libraryTargetKey)return;$('textureInput').dataset.shade=libraryTargetKey;$('textureInput').click();};
  $('browseBlockLibrary').onclick=()=>openBlockLibrary();$('closeLibrary').onclick=closeBlockLibrary;
  $('librarySlot').onchange=()=>{libraryTargetKey=$('librarySlot').value;renderPalette();};
  $('librarySearch').oninput=renderBlockLibrary;$('librarySort').value='name';$('librarySort').onchange=renderBlockLibrary;$('libraryOpaque').onchange=renderBlockLibrary;
