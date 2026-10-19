@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111614"><title>Litho · Image &amp; Block Studio</title><meta name="description" content="See your wall in Minecraft textures. Import a grayscale block map, assign materials, and explore every pixel."><style>:root{color-scheme:dark;--bg:#111614;--panel:#171d1a;--line:#2b342f;--muted:#94a39a;--text:#edf1eb;--accent:#c5e79c}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,a,input{font:inherit}button{cursor:pointer;color:inherit;background:transparent;border:1px solid var(--line);border-radius:7px;padding:8px 12px;transition:background .15s,border-color .15s}button:hover{background:#29362b;border-color:#67835e}button:focus-visible,a:focus-visible,input:focus-visible,#viewport:focus-visible{outline:2px solid var(--accent);outline-offset:3px}button:disabled{opacity:.45;cursor:wait}header{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:40px;padding:0 28px}.brand{color:inherit;text-decoration:none;display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:3px;font-size:19px}.mark{font-size:34px;color:var(--accent);line-height:1}.brand small{display:block;font-size:9px;letter-spacing:2px;font-weight:500;color:var(--muted)}.local{color:var(--muted);font-size:12px;display:flex;gap:8px;align-items:center}i,.status-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;display:inline-block}.header-actions{margin-left:auto;display:flex;gap:9px}#saveProject{background:var(--accent);color:#182015;border-color:var(--accent);font-weight:650}#saveProject span{margin-left:12px}main{display:grid;grid-template-columns:318px minmax(0,1fr);height:calc(100dvh - 76px)}aside{padding:25px 23px 14px;background:var(--panel);border-right:1px solid var(--line);overflow:auto;display:flex;flex-direction:column}.section-top{display:flex;align-items:center;justify-content:space-between}.eyebrow{font-size:10px;letter-spacing:1.6px;color:var(--muted);font-weight:650}.step{color:#67766a;font-size:11px;font-family:monospace}h1{font-size:28px;letter-spacing:-1px;line-height:1.15;margin:17px 0 12px;font-weight:600}.intro{font-size:12px;color:var(--muted);margin:0 0 23px;line-height:1.7}.dropzone{border:1px dashed #63745c;background:#20291e;padding:18px 9px;display:flex;flex-direction:column;align-items:center;gap:4px}.dropzone.drag{border-color:var(--accent);background:#34462c}.upload-icon{font-size:26px;color:var(--accent);line-height:1.2;margin-bottom:4px}.dropzone strong{font-weight:550;font-size:12px}.dropzone>span:last-child{font-size:11px;color:var(--muted)}.file-line{display:flex;justify-content:space-between;gap:10px;font-size:10px;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--line)}#imageName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#dimensions{white-space:nowrap}.palette-heading{margin-top:23px}.palette-help{font-size:11px;color:var(--muted);margin:8px 0 13px}#palette{display:flex;flex-direction:column;gap:6px}.material{display:flex;align-items:center;width:100%;text-align:left;padding:7px 9px;gap:10px;background:#1b221e;border-color:#2d382e}.material.drag{border-color:var(--accent);background:#34462c}.material .swatch{width:15px;height:32px;border-radius:3px;flex:none;border:1px solid #566054}.material img{height:32px;width:32px;image-rendering:pixelated;border-radius:3px;flex:none}.material .text{min-width:0;flex:1;overflow:hidden}.material strong{font-size:11px;font-weight:550;display:block;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.material small{color:var(--muted);font-size:10px}.material .replace{font-size:17px;color:#9cad91}.material.empty{opacity:.6;cursor:default}.note{color:#899487;font-size:10px;line-height:1.65;margin-top:14px;border-left:2px solid #4b613c;padding-left:10px}.sidebar-bottom{margin-top:auto;padding-top:24px;display:flex;justify-content:space-between;gap:8px}.sidebar-bottom button{font-size:10px;border:none;padding:6px 0;color:var(--muted)}#help span{border:1px solid #617057;padding:0 4px;border-radius:50%;margin-left:6px}.workspace{display:flex;flex-direction:column;min-width:0;min-height:0}.viewer-head{min-height:66px;padding:15px 23px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px}.viewer-head>div:first-child{display:flex;gap:17px;align-items:center}#wallSummary{font-size:11px;color:#88968d}.view-options{display:flex;align-items:center;gap:19px}.view-options label{font-size:11px;color:#b6c1b6;white-space:nowrap}.view-options input{accent-color:var(--accent);vertical-align:middle;margin-right:5px}.view-options button{font-size:11px}#viewport{position:relative;flex:1;min-height:250px;overflow:hidden;touch-action:none;cursor:grab;background:#101612}#viewport.dragging{cursor:grabbing}canvas{display:block;width:100%;height:100%}.viewer-badge{position:absolute;top:19px;left:22px;display:flex;align-items:center;gap:7px;font-size:10px;color:#b4c1b1;background:#152018d9;border:1px solid #31412e;padding:6px 10px;border-radius:20px;pointer-events:none}.navigation{position:absolute;bottom:24px;left:23px;color:#9ba797;font-size:11px;display:flex;gap:12px;pointer-events:none}.navigation b{font-weight:400}.zoom-tools{position:absolute;bottom:16px;right:20px;display:flex;align-items:center;background:#1c261de8;border:1px solid #3a4934;border-radius:9px;padding:4px;box-shadow:0 4px 20px #0005;gap:2px}.zoom-tools button{border:0;font-size:11px;padding:8px 10px}.zoom-tools #minus,.zoom-tools #plus{font-size:20px;line-height:1}#zoomLabel{min-width:59px;font-variant-numeric:tabular-nums}.zoom-tools>span{height:18px;width:1px;background:#425039;margin:0 4px}footer{min-height:40px;border-top:1px solid var(--line);padding:0 23px;display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:10px;color:var(--muted)}footer>div{display:flex;gap:8px;align-items:center}#hover{font-family:monospace}#toast{position:fixed;left:50%;bottom:65px;transform:translateX(-50%) translateY(12px);background:#d7e9c6;color:#182115;padding:12px 20px;border-radius:9px;box-shadow:0 5px 30px #0006;max-width:min(600px,90vw);font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:9}#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}dialog{border:1px solid #475441;background:#1a231b;color:var(--text);max-width:510px;padding:32px;border-radius:12px}dialog::backdrop{background:#0009;backdrop-filter:blur(3px)}dialog h2{font-size:24px;letter-spacing:-.7px}dialog p,dialog li{font-size:12px;color:#bfccba;line-height:1.8}dialog li{padding:5px 0}.close{position:absolute;right:14px;top:12px;border:0;font-size:23px}@media(max-width:1000px){header{gap:20px}.local{display:none}.view-options{gap:8px}.viewer-head{flex-wrap:wrap;padding:12px 16px}.viewer-head>div:first-child{gap:10px}.navigation{display:none}main{grid-template-columns:280px minmax(0,1fr)}aside{padding:21px 17px}.zoom-tools{right:10px}}@media(max-width:680px){header{height:64px;padding:0 14px}.brand{font-size:15px;letter-spacing:2px}.mark{font-size:29px}.header-actions{gap:5px}.header-actions button{font-size:10px;padding:7px}.header-actions span{display:none}main{display:flex;flex-direction:column;height:auto}aside{border-right:0;border-bottom:1px solid var(--line);order:2}h1,.intro,aside>.section-top:first-child{display:none}.workspace{height:65dvh;min-height:420px;order:1}#palette{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.palette-heading{margin-top:15px}.sidebar-bottom{padding-top:12px}.viewer-head{gap:6px}.view-options{justify-content:space-between;width:100%}#detail{display:none}footer{padding:0 12px}.zoom-tools{bottom:12px}.viewer-badge{left:12px;top:12px}.dropzone{padding:12px}.upload-icon{display:none}}
+main{grid-template-columns:340px minmax(0,1fr)}aside{padding-top:20px}h1{font-size:26px;margin-top:12px}.intro{margin-bottom:16px}.dropzone{padding:12px 9px}.upload-icon{display:none}.panel-tabs{display:flex;gap:4px;background:#101812;border:1px solid var(--line);padding:4px;border-radius:8px;margin:18px 0 14px;flex:none}.panel-tabs button{flex:1;border:0;padding:8px 5px;font-size:11px;white-space:nowrap}.panel-tabs button[aria-selected="true"]{background:#34462b;color:#d8efbd}section[hidden]{display:none!important}#imagePanel{font-size:11px;flex:none}#materialsPanel{flex:none}.enable-row{display:flex;gap:8px;align-items:center;font-size:12px;color:#d7e2cf}.enable-row input{accent-color:var(--accent);margin:0;width:15px;height:15px}.control-note{font-size:10px;line-height:1.65;color:var(--muted);margin:8px 0 13px}.histogram-wrap{border:1px solid #41503a;border-radius:5px;overflow:hidden;margin:10px 0 13px}#histCanvas{height:78px;width:100%}#handleCanvas{height:28px;width:100%;touch-action:none;cursor:ew-resize}fieldset{padding:0;border:0;margin:0;min-width:0}fieldset:disabled{opacity:.4}.control-label{font-size:9px;letter-spacing:1.2px;color:#aebfa5;margin:18px 0 10px;display:flex;justify-content:space-between;align-items:center}.control-label button{font-size:10px;letter-spacing:0;padding:3px 7px;color:#bfdbab}.adjust-row{display:grid;grid-template-columns:72px minmax(0,1fr) 38px;gap:9px;align-items:center;font-size:10px;color:#b9c8b1;margin:12px 0}.adjust-row input{width:100%;min-width:0;accent-color:var(--accent);height:16px;margin:0}.adjust-row output{color:#e1edda;text-align:right;font-variant-numeric:tabular-nums}select{color:var(--text);background:#202b21;border:1px solid #40513a;border-radius:5px;padding:8px;font:inherit}#ditherMode{width:100%;font-size:11px}.dither-label{margin-bottom:8px}.quant-summary{font-size:10px;border:1px solid var(--line);padding:8px 10px;background:#1c291d;border-radius:5px;margin:15px 0}.clip-row{padding-top:5px;font-size:11px}.clip-blue{color:#3988ff;margin-left:auto}.clip-red{color:#ff5a53}.editor-actions{display:flex;gap:7px;margin:16px 0 8px}.editor-actions button{font-size:10px;flex:1;padding:8px 5px}#downloadGray{background:#c5e79c;color:#182015;border-color:#c5e79c;font-weight:600}.palette-heading{margin-top:3px}.material.unused{opacity:.6}.viewer-head{flex-wrap:wrap;gap:9px}.view-options{gap:10px;flex-wrap:wrap}#previewMode{font-size:11px;padding:7px;max-width:155px}.view-options button{padding:7px 9px}#hover{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;max-width:50%}#status{white-space:nowrap}@media(max-width:1000px){main{grid-template-columns:305px minmax(0,1fr)}.viewer-head{padding:12px 15px}#wallSummary{font-size:10px}.view-options{gap:8px}#hover{max-width:42%}}@media(max-width:680px){main{display:flex}.workspace{height:65dvh}#palette{grid-template-columns:repeat(2,minmax(0,1fr))}.panel-tabs{position:sticky;top:0;z-index:2}.editor-actions button{font-size:12px}.adjust-row{grid-template-columns:85px minmax(0,1fr) 42px;font-size:12px}#imagePanel{font-size:12px}.view-options{justify-content:flex-start}.view-options button{margin-left:auto}footer{font-size:9px}}
+
+#browseBlockLibrary{width:100%;background:#2f4228;color:#d7edc1;border-color:#576e47;font-size:12px;margin:0 0 14px}.material.selected-slot{border-color:#b2d58f;box-shadow:0 0 0 1px #91b16d}.material .replace{cursor:pointer;padding:3px 0 3px 5px}.material .replace:hover{color:#e2f5cd}.library-drawer{min-width:0;display:flex;flex-direction:column;padding:20px 16px 12px;background:#19211a;border-left:1px solid #35442f;min-height:0;overflow:hidden}.library-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.library-heading h2{font-size:21px;letter-spacing:-.5px;margin:3px 0 0;font-weight:600}.library-heading>button{font-size:23px;padding:1px 10px;border:0}.library-target{font-size:9px;letter-spacing:1.3px;color:#98ad8e;display:flex;flex-direction:column;gap:7px}.library-target select{font-size:11px;letter-spacing:0;max-width:100%}#librarySearch{margin:14px 0 10px;background:#101910;border:1px solid #475b3d;border-radius:6px;color:#edf1eb;padding:10px 11px;font-size:12px;width:100%;outline-offset:2px}.library-filters{display:flex;align-items:end;gap:12px;margin-bottom:9px}.library-filters>label:first-child{display:flex;flex-direction:column;gap:4px;font-size:9px;color:#a3b899}.library-filters select{font-size:10px;padding:5px 7px}.library-check{display:flex;align-items:center;gap:5px;font-size:10px;color:#b9c9af;white-space:nowrap;margin-bottom:5px}.library-check input{accent-color:#c5e79c}.library-status{font-size:10px;color:#a1b696;margin:7px 0 12px;min-height:15px}.library-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;overflow:auto;align-content:start;flex:1;min-height:0;padding:2px 3px 5px 1px}.library-card{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;padding:9px 3px 7px;background:#212d20;border:1px solid #394c31;border-radius:6px;text-align:center}.library-card:hover{border-color:#b7d895;background:#34462a}.library-card img{width:40px;height:40px;image-rendering:pixelated;background:repeating-conic-gradient(#313c2d 0% 25%,#1c281a 0% 50%) 0/8px 8px}.library-card .block-name{font-size:8px;line-height:1.3;min-height:22px;overflow-wrap:anywhere;color:#d8e4ce}.library-card:active{cursor:grabbing}.library-card[draggable=true]{cursor:grab}.library-empty{padding:15px 12px;background:#111c12;border:1px dashed #526749;border-radius:7px;color:#adbea3;font-size:11px;line-height:1.7}.library-empty p{margin:8px 0}.library-empty code{font-size:10px;color:#d0e2c2}.library-empty strong{color:#dbeccc}.library-bottom{display:flex;flex-wrap:wrap;gap:6px;padding-top:15px;margin-top:auto}.library-bottom button{font-size:10px;padding:7px 8px}#createTextureList{background:#c5e79c;color:#172112;border-color:#c5e79c}.library-note{font-size:9px;line-height:1.65;color:#8fa483;margin:10px 0 0}main.library-open{grid-template-columns:340px minmax(250px,1fr) 335px}.library-card.invalid{display:none}@media(max-width:1200px){main.library-open{grid-template-columns:305px minmax(0,1fr)}.library-drawer{position:fixed;right:0;top:76px;bottom:0;width:335px;z-index:8;box-shadow:-12px 0 40px #0005}}@media(max-width:680px){.library-drawer{top:64px;width:min(370px,100vw)}main.library-open{display:flex}.library-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.library-card .block-name{font-size:9px}.library-target select{font-size:12px}.library-bottom button{font-size:11px}}
+
+</style></head>
+<body>
+<header><a class="brand" href="#" aria-label="Litho Block Viewer"><span class="mark">▧</span><span>LITHO <small>BLOCK VIEWER</small></span></a><span class="local"><i></i> Your image stays on your device</span><div class="header-actions"><button id="openProject">Open project</button><button id="saveProject">Save project <span>↗</span></button></div></header>
+<main>
+<aside>
+<div class="section-top"><span class="eyebrow">THE BLUEPRINT</span><span class="step">01</span></div>
+<h1>Your pixels.<br>Real materials.</h1><p class="intro">One image pixel, one Minecraft block.<br>See the wall before you build it.</p>
+<button class="dropzone" id="importImage"><span class="upload-icon">↥</span><strong>Drop an image</strong><span>PNG, JPG, WebP · or click to choose</span></button>
+<div class="file-line"><span id="imageName">Castle study · demo</span><span id="dimensions">200 × 100</span></div>
+<div class="panel-tabs" role="tablist" aria-label="Editing tools"><button id="imageTab" role="tab" aria-selected="false" aria-controls="imagePanel">Image adjustments</button><button id="materialsTab" role="tab" aria-selected="true" aria-controls="materialsPanel">Block palette</button></div>
+<section id="imagePanel" role="tabpanel" aria-labelledby="imageTab" hidden>
+<label class="enable-row"><input type="checkbox" id="quantizeEnabled"> Enable quantization</label>
+<p class="control-note" id="inputModeNote">Existing grayscale shades are preserved.</p>
+<div class="histogram-wrap"><canvas id="histCanvas" width="272" height="78" aria-label="Source grayscale histogram"></canvas><canvas id="handleCanvas" width="272" height="28" aria-label="Drag black, midtone and white levels handles"></canvas></div>
+<fieldset id="quantizeControls">
+<div class="control-label">BLUR FIRST</div>
+<label class="adjust-row"><span>Blur radius</span><input type="range" id="blurSlider" min="0" max="10" step="0.1" value="0"><output id="blurValue">0.0 px</output></label>
+<p class="control-note">Applied before levels, grain, dithering and quantization.</p>
+
+<div class="control-label">LEVELS <button type="button" id="autoRange">Auto range</button></div>
+<label class="adjust-row"><span>Black point</span><input type="range" id="blackPoint" min="0" max="253" value="0"><output id="blackValue">0</output></label>
+<label class="adjust-row"><span>White point</span><input type="range" id="whitePoint" min="2" max="255" value="255"><output id="whiteValue">255</output></label>
+<label class="adjust-row"><span>Midtones</span><input type="range" id="gammaPoint" min="0" max="200" value="100"><output id="gammaValue">1.00</output></label>
+<div class="control-label">GRAIN <button type="button" id="reseed">Reseed</button></div>
+<label class="adjust-row"><span>Amount</span><input type="range" id="grainSlider" min="0" max="100" value="0"><output id="grainValue">0</output></label>
+<label class="control-label dither-label" for="ditherMode">DITHERING TYPE</label>
+<select id="ditherMode"><option value="none">None</option><option value="floyd">Floyd–Steinberg</option><option value="atkinson">Atkinson</option><option value="ordered">Ordered (Bayer 8 × 8)</option><option value="stucki">Stucki</option></select>
+<label class="adjust-row"><span>Strength</span><input type="range" id="ditherStrength" min="0" max="100" value="100"><output id="ditherValue">100%</output></label>
+<div class="control-label">QUANTIZATION STEPS</div>
+<label class="adjust-row"><span>Shades</span><input type="range" id="stepsSlider" min="2" max="16" value="6"><output id="stepsValue">6</output></label>
+</fieldset>
+<div class="quant-summary" id="shadeUsage">Load an image to begin.</div>
+<label class="enable-row clip-row"><input type="checkbox" id="clipToggle"> Clip warning <span class="clip-blue">■</span><span class="clip-red">■</span></label>
+<p class="control-note" id="clipSummary">Blue = output black · red = output white.<br>Warnings are preview-only.</p>
+<div class="editor-actions"><button id="resetAdjustments">Reset adjustments</button><button id="downloadGray">↓ Grayscale PNG</button></div>
+</section>
+<section id="materialsPanel" role="tabpanel" aria-labelledby="materialsTab">
+<button id="browseBlockLibrary">▦ Browse block library</button>
+<div class="section-top palette-heading"><span class="eyebrow">MATERIAL PALETTE</span><span class="step">02</span></div>
+<div class="palette-help">Click a slot to choose a block, or drag a block from the library. Matching shades keep their textures on image import.</div>
+<div id="palette"></div>
+<div id="demoNote" class="note">Sample textures are illustrative. Replace them with your Minecraft textures for an accurate preview.</div>
+</section>
+<div class="sidebar-bottom"><button id="demo">Load castle demo</button><button id="help">How it works <span>?</span></button></div>
+</aside>
+<section class="workspace" aria-label="Wall viewer">
+<div class="viewer-head"><div><span class="eyebrow">WALL PREVIEW</span><span id="wallSummary">20,000 positions</span></div><div class="view-options"><label><input type="checkbox" id="grid"> Block grid</label><select id="previewMode" aria-label="Preview mode"><option value="0">Block textures</option><option value="1">Grayscale image</option><option value="2">Source image</option></select><label><input type="checkbox" id="blueprint"> Avg. colors</label><button id="export">↓ Block PNG</button></div></div>
+<div id="viewport" tabindex="0" aria-label="Drag to pan. Scroll to zoom. Plus and minus keys zoom; F fits the wall."><canvas id="canvas"></canvas><div class="viewer-badge"><i></i><span id="filterLabel">Smooth distance filtering</span></div><div class="navigation"><span>Drag to pan</span><b>·</b><span>Scroll to explore</span></div><div class="zoom-tools"><button id="minus" aria-label="Zoom out">−</button><button id="zoomLabel" title="Reset to actual texture pixels">100%</button><button id="plus" aria-label="Zoom in">+</button><span></span><button id="fit">Fit wall</button><button id="actual">1:1 pixels</button></div></div>
+<footer><div><span class="status-dot"></span><span id="status">Ready</span></div><span id="hover">Hover to inspect a block</span><span id="detail">16 × 16 textures</span></footer>
+</section>
+<section id="libraryDrawer" class="library-drawer" aria-label="Minecraft block library" hidden>
+<div class="library-heading"><div><span class="eyebrow">YOUR TEXTURES</span><h2>Block library</h2></div><button id="closeLibrary" aria-label="Close block library">×</button></div>
+<label class="library-target">ASSIGN TO PALETTE SLOT<select id="librarySlot" aria-label="Palette slot to assign"></select></label>
+<input id="librarySearch" type="search" placeholder="Search block names…" aria-label="Search block names" autocomplete="off">
+<div class="library-filters"><label>Sort<select id="librarySort"><option value="name">Name A–Z</option><option value="dark">Dark → light</option><option value="light">Light → dark</option></select></label><label class="library-check"><input type="checkbox" id="libraryOpaque"> Solid faces only</label></div>
+<p id="libraryStatus" class="library-status" role="status">Open the library to load your textures.</p>
+<div id="libraryGrid" class="library-grid"></div>
+<div id="libraryEmpty" class="library-empty" hidden><strong>No texture list yet.</strong><p>Select your textures folder below. The app will create <code>index.json</code> for you. Upload that file inside your <code>textures</code> folder beside the PNGs.</p><p>Expected: <code>textures/stone.png</code> and <code>textures/index.json</code>, with your HTML one level above.</p></div>
+<div class="library-bottom"><button id="createTextureList">Create texture list…</button><button id="reloadLibrary">Reload</button><button id="libraryUpload">Upload one PNG…</button></div>
+<p class="library-note">Drag a block onto any palette slot, or choose a slot above and click a block. Only 16 × 16 PNGs are included. Your saved projects still contain the textures they use.</p>
+<input type="file" id="textureFolderInput" accept="image/png" webkitdirectory multiple hidden>
+</section>
+
+</main>
+<input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,image/avif" hidden><input type="file" id="textureInput" accept="image/png" hidden><input type="file" id="projectInput" accept=".json,application/json" hidden>
+<div id="toast" role="status" aria-live="polite"></div>
+<dialog id="helpDialog"><button class="close" id="closeHelp" aria-label="Close">×</button><span class="eyebrow">FROM BLUEPRINT TO BLOCKS</span><h2>A wall, without the guesswork.</h2><ol><li>Import a photo or a grayscale PNG. Its width and height become the wall dimensions in blocks; the app never silently resizes it. In Image adjustments, enable quantization to edit levels, grain and dithering.</li><li>Open Block library or click a palette slot, then click or drag a thumbnail to assign it. The ↥ icon still lets you upload an individual PNG. The library reads textures/index.json and the PNGs listed there.</li><li>Load another image anytime: exact grayscale matches keep their textures. New shades start white. While quantization is enabled, all selected shades stay in the palette even if some have zero pixels, so their textures survive adjustments. Changing the number of steps keeps exact grayscale matches.</li><li>Scroll to zoom and drag to pan. Close up, pixels stay sharp. At a distance, the real texture colors blend smoothly.</li></ol><p>Transparent image pixels become empty space. Square power-of-two textures from 8–256 pixels are supported; mixed sizes are normalized to the largest size.</p><p><strong>Save project</strong> includes the original source, image adjustments, textures and view. Existing project files still open. <strong>Grayscale PNG</strong> downloads the adjusted grayscale image at its original dimensions. <strong>Block PNG</strong> exports the full textured wall. Neither export includes grids or clip-warning colors.</p><p>To set up the hosted block library, put your 16×16 PNGs in a textures folder next to this HTML. In the library, click Create texture list and select that folder. Save the generated index.json inside textures and upload the entire folder beside the HTML. For a local test, selecting the folder also loads its textures immediately.</p><p>Blur is applied first, before levels, grain, dithering and quantization. Its radius is measured in source-image pixels. Set it to zero to preserve original sharpness. The Source image view always shows the unblurred original.</p><p>Clip warning shows final output black in blue and final output white in red. Grain uses a stable seed; Reseed changes its pattern. Transparent source pixels below 50% opacity become empty space. Auto range stretches the source histogram to black and white. A flat image may use fewer shades than selected; no fake pixels are added.</p><p class="note">This is a flat texture preview. Game lighting, shaders, and randomized block-face variants are not simulated.</p></dialog>
+<script>
+function analyzePixels(data, width, height) {
+  const colors = new Map();
+  for (let i=0; i<data.length; i+=4) {
+    const [r,g,b,a]=data.subarray(i,i+4);
+    if (a!==0 && a!==255) throw new Error('Use a quantized PNG with fully opaque or fully transparent pixels. Semi-transparent pixels were found.');
+    if (a && (r!==g || r!==b)) throw new Error('This image contains color. Please import a quantized grayscale PNG.');
+    const key=a ? String(r) : 'air';
+    colors.set(key,(colors.get(key)||0)+1);
+    if(colors.size>256) throw new Error('The image has more than 256 palette entries. Reduce its grayscale palette first.');
+  }
+  const palette=[...colors].sort((a,b)=>(a[0]==='air'?-1:Number(a[0]))-(b[0]==='air'?-1:Number(b[0]))).map(([key,count])=>({key,count,gray:key==='air'?0:Number(key),name:key==='air'?'Empty / transparent':`Gray ${key}`}));
+  const ids=new Map(palette.map((p,i)=>[p.key,i]));
+  const map=new Uint8Array(width*height);
+  for(let i=0;i<map.length;i++) map[i]=ids.get(data[i*4+3] ? String(data[i*4]) : 'air');
+  return {map,palette,width,height};
+}
+function makeOverview(map, averages) {
+  const result=new Uint8Array(map.length*4);
+  for(let i=0;i<map.length;i++) result.set(averages[map[i]],i*4);
+  return result;
+}
+function zoomAt(view, factor, x, y) {
+  const scale=Math.max(.01,Math.min(1024,view.scale*factor));
+  return {scale,x:x-(x-view.x)*scale/view.scale,y:y-(y-view.y)*scale/view.scale};
+}
+function demoPixels() {
+  const width=200,height=100, data=new Uint8ClampedArray(width*height*4),levels=[30,70,110,150,190,230];
+  let seed=641;
+  const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+  for(let y=0;y<height;y++) for(let x=0;x<width;x++) {
+    const tower=x<30||x>=170;
+    const top=tower?8:25;
+    let air=y<top || (y<top+8 && Math.floor(x/6)%2===1);
+    let id=2+(rnd()>.78?1:0);
+    if(y>82) id=1;
+    if(y===top+8 || y===top+9 || y===78 || y===79) id=4;
+    if(x%30===0 || x%30===1) id=4;
+    if(tower && x%10<2) id=3;
+    const arch=((x-100)/16)**2+((y-66)/21)**2;
+    if((y>=66 && Math.abs(x-100)<16)||(y<66 && arch<1)) id=0;
+    if(((y>=66&&Math.abs(x-100)>=16&&Math.abs(x-100)<19)||(y<66&&arch>=1&&arch<1.35))) id=5;
+    if((x<30||x>=170)&&y>35&&y<59&&x%30>=12&&x%30<=17) id=0;
+    const i=(y*width+x)*4,g=levels[id]; data.set([g,g,g,air?0:255],i);
+  }
+  return {data,width,height};
+}
+
+const $=id=>document.getElementById(id),canvas=$('canvas'),viewport=$('viewport');
+const gl=canvas.getContext('webgl2',{antialias:false,alpha:false,preserveDrawingBuffer:false});
+let state=null,view={x:0,y:0,scale:8},textureSize=16,frame=0,busy=false,selected=0,toastTimer;
+let mapTexture,arrayTexture,overviewTexture,program,uniforms={},revision=0,sourceURL='',sourceName='';
+const maxPixels=16_000_000;
+const workerSource="const BAYER8=[0,32,8,40,2,34,10,42,48,16,56,24,50,18,58,26,12,44,4,36,14,46,6,38,60,28,52,20,62,30,54,22,3,35,11,43,1,33,9,41,51,19,59,27,49,17,57,25,15,47,7,39,13,45,5,37,63,31,55,23,61,29,53,21];\nconst DIFFUSION={\n floyd:[[1,0,7/16],[-1,1,3/16],[0,1,5/16],[1,1,1/16]],\n atkinson:[[1,0,1/8],[2,0,1/8],[-1,1,1/8],[0,1,1/8],[1,1,1/8],[0,2,1/8]],\n stucki:[[1,0,8/42],[2,0,4/42],[-2,1,2/42],[-1,1,4/42],[0,1,8/42],[1,1,4/42],[2,1,2/42],[-2,2,1/42],[-1,2,2/42],[0,2,4/42],[1,2,2/42],[2,2,1/42]]\n};\nfunction normalizeSettings(input={}){\n const finite=(v,f)=>Number.isFinite(Number(v))?Number(v):f,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));\n const black=Math.round(clamp(finite(input.black,0),0,253)),white=Math.round(clamp(finite(input.white,255),black+2,255));\n return {enabled:input.enabled!==false,steps:Math.round(clamp(finite(input.steps,6),2,16)),blur:clamp(finite(input.blur,0),0,10),black,white,gamma:clamp(finite(input.gamma,1),.1,10),grain:clamp(finite(input.grain,0),0,100),dither:['none','floyd','atkinson','ordered','stucki'].includes(input.dither)?input.dither:'none',strength:clamp(finite(input.strength,100),0,100),seed:finite(input.seed,146921)>>>0};\n}\nfunction prepareSource(data,width,height){\n if(data.length!==width*height*4)throw new Error('Invalid source image data.');\n const gray=new Uint8Array(width*height),alpha=new Uint8Array(width*height),histogram=new Uint32Array(256),present=new Uint8Array(256),premult=new Uint8Array(data.length);\n let grayscale=true,transparent=0,opaque=0;\n for(let i=0;i<gray.length;i++){\n  const j=i*4,r=data[j],g=data[j+1],b=data[j+2],a=data[j+3];\n  gray[i]=Math.round(.299*r+.587*g+.114*b);alpha[i]=a>=128?255:0;\n  if(alpha[i]){histogram[gray[i]]++;present[gray[i]]=1;opaque++;if(r!==g||r!==b)grayscale=false;}else transparent++;\n  premult[j]=Math.round(r*a/255);premult[j+1]=Math.round(g*a/255);premult[j+2]=Math.round(b*a/255);premult[j+3]=a;\n }\n return {source:{gray,alpha,width,height},info:{width,height,histogram,grayscale,values:[...present.keys()].filter(i=>present[i]),transparent,opaque},premult};\n}\n// Three fractional box passes approximate a Gaussian smoothly in O(pixel count).\n// Weighted alpha prevents transparent pixels from darkening visible neighbors.\nfunction blurSourceGray(source,sigma){\n if(sigma<=0)return source.gray;\n if(source.blurSigma===sigma&&source.blurredGray)return source.blurredGray;\n const {width,height,gray,alpha}=source,n=gray.length,variance=sigma*sigma/3;\n const radius=Math.max(0,Math.floor((Math.sqrt(12*variance+1)-1)/2));\n const length=2*radius+1,moment=radius*(radius+1)*(2*radius+1)/3;\n const fraction=Math.max(0,Math.min(1,(variance*length-moment)/(2*((radius+1)**2-variance))));\n const norm=length+2*fraction,hasAir=alpha.some(a=>!a);\n let a=Float32Array.from(gray,(v,i)=>alpha[i]?v:0),b=new Float32Array(n);\n let aw=hasAir?Float32Array.from(alpha,v=>v?1:0):null,bw=hasAir?new Float32Array(n):null;\n function sweep(input,output,weights,outWeights,vertical){\n  const lines=vertical?width:height,size=vertical?height:width,stride=vertical?width:1;\n  for(let line=0;line<lines;line++){\n   const base=vertical?line:line*width;let sum=0,weight=0;\n   for(let k=-radius;k<=radius;k++){const idx=base+Math.max(0,Math.min(size-1,k))*stride;sum+=input[idx];if(weights)weight+=weights[idx];}\n   for(let pos=0;pos<size;pos++){\n    const idx=base+pos*stride,left=base+Math.max(0,pos-radius-1)*stride,right=base+Math.min(size-1,pos+radius+1)*stride;\n    output[idx]=(sum+fraction*(input[left]+input[right]))/norm;\n    if(weights)outWeights[idx]=(weight+fraction*(weights[left]+weights[right]))/norm;\n    const remove=base+Math.max(0,pos-radius)*stride,add=base+Math.min(size-1,pos+radius+1)*stride;\n    sum+=input[add]-input[remove];if(weights)weight+=weights[add]-weights[remove];\n   }\n  }\n }\n for(let pass=0;pass<3;pass++){sweep(a,b,aw,bw,false);sweep(b,a,bw,aw,true);}\n if(hasAir)for(let i=0;i<n;i++)a[i]=aw[i]>1e-8?a[i]/aw[i]:0;\n source.blurSigma=sigma;source.blurredGray=a;return a;\n}\n\nfunction quantizeSource(source,input){\n const settings=normalizeSettings(input),{width,height,gray,alpha}=source,n=gray.length;\n const inputGray=settings.enabled?blurSourceGray(source,settings.blur):gray,inputHistogram=new Uint32Array(256);\n for(let i=0;i<n;i++)if(alpha[i])inputHistogram[Math.max(0,Math.min(255,Math.round(inputGray[i]))) ]++;\n const values=settings.enabled?Array.from({length:settings.steps},(_,i)=>Math.round(i*255/(settings.steps-1))):[...new Set(gray.filter((_,i)=>alpha[i]))].sort((a,b)=>a-b);\n const hasAir=alpha.some(a=>!a),offset=hasAir?1:0;\n if(values.length+offset>256)throw new Error('Enable quantization to reduce this image to at most 16 shades.');\n const palette=hasAir?[{key:'air',gray:0,count:0,name:'Empty / transparent'}]:[];\n for(const v of values)palette.push({key:String(v),gray:v,count:0,name:`Gray ${v}`});\n const lookup=new Uint8Array(256);values.forEach((v,i)=>lookup[v]=i+offset);\n const map=new Uint8Array(n),rgba=new Uint8ClampedArray(n*4),histogram=new Uint32Array(256);\n let buf=null;\n if(settings.enabled){\n  buf=new Float32Array(n);const lut=new Float32Array(256),range=settings.white-settings.black;\n  for(let v=0;v<256;v++)lut[v]=Math.pow(Math.max(0,Math.min(1,(v-settings.black)/range)),1/settings.gamma)*255;\n  let seed=settings.seed;\n  for(let i=0;i<n;i++){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const noise=settings.grain?((seed>>>8)/16777216*2-1)*settings.grain:0;buf[i]=Math.max(0,Math.min(255,lut[Math.max(0,Math.min(255,Math.round(inputGray[i])))]+noise));}\n }\n const strength=settings.strength/100,kernel=DIFFUSION[settings.dither];\n for(let y=0;y<height;y++)for(let x=0;x<width;x++){\n  const i=y*width+x,j=i*4;\n  if(!alpha[i]){map[i]=0;palette[0].count++;continue;}\n  let v=gray[i],index;\n  if(settings.enabled){\n   const old=buf[i];let adjusted=old;\n   if(settings.dither==='ordered')adjusted+=(BAYER8[(y&7)*8+(x&7)]/64-.5)*255/(settings.steps-1)*strength;\n   const bin=Math.max(0,Math.min(settings.steps-1,Math.round(adjusted/255*(settings.steps-1))));v=values[bin];index=bin+offset;\n   if(kernel&&strength){const error=(old-v)*strength;for(const [dx,dy,weight] of kernel){const nx=x+dx,ny=y+dy;if(nx>=0&&nx<width&&ny<height&&alpha[ny*width+nx])buf[ny*width+nx]+=error*weight;}}\n  }else index=lookup[v];\n  map[i]=index;palette[index].count++;histogram[v]++;rgba[j]=rgba[j+1]=rgba[j+2]=v;rgba[j+3]=255;\n }\n return {width,height,map,palette,rgba,histogram,inputHistogram,settings,used:values.filter(v=>histogram[v]>0).length};\n}\nlet workerSourceImage=null;\nself.onmessage=({data:m})=>{\n try{\n  if(m.type==='source'){\n   const loaded=prepareSource(new Uint8ClampedArray(m.data),m.width,m.height);workerSourceImage=loaded.source;\n   self.postMessage({id:m.id,result:{info:loaded.info,premult:loaded.premult}},[loaded.premult.buffer]);\n  }else if(m.type==='quantize'){\n   if(!workerSourceImage)throw new Error('Load an image first.');const result=quantizeSource(workerSourceImage,m.settings);\n   self.postMessage({id:m.id,result},[result.map.buffer,result.rgba.buffer]);\n  }else if(m.type==='overview'){\n   const result=new Uint8Array(m.map.length*4);for(let i=0;i<m.map.length;i++)result.set(m.averages[m.map[i]],i*4);\n   self.postMessage({id:m.id,result},[result.buffer]);\n  }\n }catch(e){self.postMessage({id:m.id,error:e.message});}\n};\n";
+const workerURL=URL.createObjectURL(new Blob([workerSource],{type:"text/javascript"}));
+const worker=new Worker(workerURL),pending=new Map(); let requestId=0;
+worker.onmessage=({data:m})=>{const p=pending.get(m.id);if(!p)return;pending.delete(m.id);m.error?p.reject(new Error(m.error)):p.resolve(m.result);};
+worker.onerror=()=>{for(const p of pending.values())p.reject(new Error('Image processing could not start. Reload the app in a current browser.'));pending.clear();};
+function work(type,payload,transfer=[]){return new Promise((resolve,reject)=>{const id=++requestId;pending.set(id,{resolve,reject});worker.postMessage({id,type,...payload},transfer);});}
+function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),6500);}
+function status(text){$('status').textContent=text;}
+async function safely(fn){if(busy){toast('Please wait for the current import to finish.');return;}busy=true;try{await fn();}catch(e){toast(e.message);status('Ready · import failed');console.error(e);}finally{busy=false;if(editorSource&&quantApplied!==quantRevision)processQuantization();}}
+function compile(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s;}
+const vertex=`#version 300 es
+void main(){vec2 p=vec2((gl_VertexID<<1)&2,gl_VertexID&2);gl_Position=vec4(p*2.0-1.0,0.0,1.0);}`;
+const fragment=`#version 300 es
+precision highp float;
+precision highp int;
+precision highp usampler2D;
+precision highp sampler2DArray;
+uniform usampler2D uMap;
+uniform sampler2DArray uMaterials;
+uniform sampler2D uOverview,uGrayImage,uSourceImage;
+uniform vec2 uOrigin,uSize,uViewport;
+uniform float uScale,uTexSize,uDpr;
+uniform int uGrid,uBlueprint,uMode,uClip;
+out vec4 outColor;
+void main(){
+ vec2 screen=vec2(gl_FragCoord.x,uViewport.y-gl_FragCoord.y);
+ vec2 world=uOrigin+screen/uScale;
+ float check=mod(floor(screen.x/(14.0*uDpr))+floor(screen.y/(14.0*uDpr)),2.0);
+ vec3 background=mix(vec3(.063,.086,.067),vec3(.078,.102,.078),check);
+ if(any(lessThan(world,vec2(0)))||any(greaterThanEqual(world,uSize))){outColor=vec4(background,1);return;}
+ ivec2 block=ivec2(floor(world));int id=int(texelFetch(uMap,block,0).r);vec2 uv=fract(world);
+ vec4 gray=texelFetch(uGrayImage,block,0),material;
+ if(uMode==2){material=uScale>=1.0?texelFetch(uSourceImage,block,0):textureLod(uSourceImage,world/uSize,max(0.0,log2(1.0/uScale)));}
+ else if(uMode==1){material=uScale>=1.0?gray:textureLod(uGrayImage,world/uSize,max(0.0,log2(1.0/uScale)));}
+ else if(uBlueprint==1){material=textureLod(uOverview,(vec2(block)+.5)/uSize,0.0);}
+ else{
+  if(uScale>=uTexSize){material=texelFetch(uMaterials,ivec3(ivec2(floor(uv*uTexSize)),id),0);}
+  else{material=textureLod(uMaterials,vec3(uv,float(id)),clamp(log2(uTexSize/uScale),0.0,log2(uTexSize)));}
+  float blend=1.0-smoothstep(.75,1.75,uScale);
+  if(blend>0.0){material=mix(material,textureLod(uOverview,world/uSize,max(0.0,log2(1.0/uScale))),blend);}
+ }
+ if(uClip==1&&uMode!=2&&gray.a>.5){if(gray.r<.001)material=vec4(0,.392,1,1);else if(gray.r>.999)material=vec4(1,.196,.196,1);}
+ vec3 color=material.rgb+background*(1.0-material.a);
+ if(uGrid==1&&uScale/uDpr>=5.0&&material.a>.1){vec2 edge=min(uv,1.0-uv)*uScale;float line=1.0-smoothstep(.3*uDpr,.9*uDpr,min(edge.x,edge.y));color=mix(color,vec3(.04,.06,.04),line*.5);}
+ outColor=vec4(color,1);
+}`;
+function initGL(){
+ program=gl.createProgram();const vs=compile(gl.VERTEX_SHADER,vertex),fs=compile(gl.FRAGMENT_SHADER,fragment);gl.attachShader(program,vs);gl.attachShader(program,fs);gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(program));gl.deleteShader(vs);gl.deleteShader(fs);gl.useProgram(program);gl.bindVertexArray(gl.createVertexArray());
+ for(const n of ['uMap','uMaterials','uOverview','uOrigin','uSize','uViewport','uScale','uTexSize','uDpr','uGrid','uBlueprint','uMode','uClip','uGrayImage','uSourceImage'])uniforms[n]=gl.getUniformLocation(program,n);
+ gl.uniform1i(uniforms.uMap,0);gl.uniform1i(uniforms.uMaterials,1);gl.uniform1i(uniforms.uOverview,2);gl.uniform1i(uniforms.uGrayImage,3);gl.uniform1i(uniforms.uSourceImage,4);gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);gl.disable(gl.DEPTH_TEST);
+}
+function schedule(){if(!frame)frame=requestAnimationFrame(render);}
+function render(){frame=0;if(!state||!program||gl.isContextLost())return;const dpr=window.devicePixelRatio||1,w=Math.max(1,Math.round(viewport.clientWidth*dpr)),h=Math.max(1,Math.round(viewport.clientHeight*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}gl.viewport(0,0,w,h);gl.useProgram(program);gl.uniform2f(uniforms.uViewport,w,h);gl.uniform2f(uniforms.uOrigin,-view.x/view.scale,-view.y/view.scale);gl.uniform2f(uniforms.uSize,state.width,state.height);gl.uniform1f(uniforms.uScale,view.scale*dpr);gl.uniform1f(uniforms.uDpr,dpr);gl.uniform1f(uniforms.uTexSize,textureSize);gl.uniform1i(uniforms.uGrid,$('grid').checked?1:0);gl.uniform1i(uniforms.uBlueprint,$('blueprint').checked?1:0);gl.uniform1i(uniforms.uMode,Number($('previewMode').value));gl.uniform1i(uniforms.uClip,$('clipToggle').checked?1:0);gl.drawArrays(gl.TRIANGLES,0,3);const percent=view.scale*dpr/($('previewMode').value==='0'?textureSize:1)*100;$('zoomLabel').textContent=percent>=10?`${Math.round(percent)}%`:`${percent.toFixed(1)}%`;$('filterLabel').textContent=$('previewMode').value==='2'?'Original source image':$('previewMode').value==='1'?'Quantized grayscale · one pixel per block':$('blueprint').checked?'Material color overview':view.scale*dpr>=textureSize?'Full texture detail':'Smooth distance filtering';}
+function fit(){if(!state)return;const w=viewport.clientWidth,h=viewport.clientHeight;view.scale=Math.max(.01,Math.min((w-72)/state.width,(h-110)/state.height));view.x=(w-state.width*view.scale)/2;view.y=(h-state.height*view.scale)/2;schedule();}
+function zoom(factor,x=viewport.clientWidth/2,y=viewport.clientHeight/2){view=zoomAt(view,factor,x,y);schedule();}
+function actual(){zoom(($('previewMode').value==='0'?textureSize:1)/(window.devicePixelRatio||1)/view.scale);}
+function texture2D(unit,old,format,width,height,data,type=gl.UNSIGNED_BYTE){if(old)gl.deleteTexture(old);gl.activeTexture(gl.TEXTURE0+unit);const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,unit===0?gl.NEAREST:gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,unit===0?gl.NEAREST:gl.LINEAR_MIPMAP_LINEAR);gl.texImage2D(gl.TEXTURE_2D,0,format,width,height,0,unit===0?gl.RED_INTEGER:gl.RGBA,type,data);if(unit!==0)gl.generateMipmap(gl.TEXTURE_2D);return t;}
+function smallCanvas(w,h=w){const c=document.createElement('canvas');c.width=w;c.height=h;return c;}
+function pixelsURL(data,w,h){const c=smallCanvas(w,h);c.getContext('2d').putImageData(new ImageData(data,w,h),0,0);return c.toDataURL('image/png');}
+function fallback(p,size){const c=smallCanvas(size),ctx=c.getContext('2d');if(p.key!=='air'){ctx.fillStyle='#ffffff';ctx.fillRect(0,0,size,size);}return c;}
+async function rebuildMaterials(){
+ const r=++revision;textureSize=Math.max(16,...state.palette.map(p=>p.image?.width||0));
+ gl.activeTexture(gl.TEXTURE1);if(arrayTexture)gl.deleteTexture(arrayTexture);arrayTexture=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D_ARRAY,arrayTexture);gl.texStorage3D(gl.TEXTURE_2D_ARRAY,Math.log2(textureSize)+1,gl.RGBA8,textureSize,textureSize,state.palette.length);gl.texParameteri(gl.TEXTURE_2D_ARRAY,gl.TEXTURE_MAG_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D_ARRAY,gl.TEXTURE_MIN_FILTER,gl.LINEAR_MIPMAP_LINEAR);gl.texParameteri(gl.TEXTURE_2D_ARRAY,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D_ARRAY,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+ const averages=[];
+ state.palette.forEach((p,i)=>{const c=smallCanvas(textureSize),ctx=c.getContext('2d',{willReadFrequently:true});ctx.imageSmoothingEnabled=false;ctx.drawImage(p.image||fallback(p,textureSize),0,0,textureSize,textureSize);const data=ctx.getImageData(0,0,textureSize,textureSize).data;
+   // Premultiplied colors keep transparent edges dark-halo free in reduced views.
+   const upload=new Uint8Array(data.length);const sum=[0,0,0,0];for(let j=0;j<data.length;j+=4){const a=data[j+3]/255;for(let k=0;k<3;k++){upload[j+k]=Math.round(data[j+k]*a);sum[k]+=upload[j+k];}upload[j+3]=data[j+3];sum[3]+=data[j+3];}averages.push(sum.map(v=>Math.round(v/(textureSize*textureSize))));p.normalized=data;
+   gl.texSubImage3D(gl.TEXTURE_2D_ARRAY,0,0,0,i,textureSize,textureSize,1,gl.RGBA,gl.UNSIGNED_BYTE,upload);
+ });gl.generateMipmap(gl.TEXTURE_2D_ARRAY);
+ // Initialize immediately; swap in the filtered overview when processing finishes.
+ const initial=await work('overview',{map:state.map,averages});
+ if(r!==revision)return;
+ overviewTexture=texture2D(2,overviewTexture,gl.RGBA8,state.width,state.height,initial);
+ $('detail').textContent=`${textureSize} × ${textureSize} textures`;
+ const assigned=state.palette.filter(p=>p.key!=='air'&&p.url).length,total=state.palette.filter(p=>p.key!=='air').length;status(`${assigned} / ${total} materials assigned`);schedule();
+}
+function renderPalette(){
+ $('palette').replaceChildren();for(let i=0;i<state.palette.length;i++){
+  const p=state.palette[i],b=document.createElement('button');b.className='material'+(p.key==='air'?' empty':p.count===0?' unused':'')+(!$('libraryDrawer').hidden&&libraryTargetKey===p.key?' selected-slot':'');b.title=p.key==='air'?'Transparent pixels leave empty space':'Choose from block library, drag a block here, or use ↥ to upload a PNG';
+  const sw=document.createElement('span');sw.className='swatch';sw.style.background=p.key==='air'?'repeating-conic-gradient(#555 0% 25%,#222 0% 50%) 0 / 8px 8px':`rgb(${p.gray} ${p.gray} ${p.gray})`;
+  const img=document.createElement('img');img.src=p.url||fallback(p,16).toDataURL();img.alt='';const text=document.createElement('span');text.className='text';const title=document.createElement('strong');title.textContent=p.key!=='air'&&!p.url?'Choose texture · white placeholder':p.name;const sub=document.createElement('small');sub.textContent=p.key==='air'?`${p.count.toLocaleString()} empty pixels`:`Gray ${p.gray} · ${p.count.toLocaleString()} blocks${p.count===0?' · kept for edits':''}`;text.append(title,sub);const change=document.createElement('span');change.className='replace';change.textContent=p.key==='air'?'':'↥';change.title='Upload a texture PNG for this slot';b.append(sw,img,text,change);
+  if(p.key!=='air'){b.onclick=()=>openBlockLibrary(p.key);change.onclick=e=>{e.stopPropagation();selected=i;$('textureInput').dataset.shade=p.key;$('textureInput').click();};drop(b,file=>safely(()=>assignTexture(i,file)),id=>assignLibraryToShade(p.key,id));}else b.disabled=true;$('palette').append(b);
+ }
+ const demo=state.palette.some(p=>p.demo);$('demoNote').hidden=!demo;refreshLibrarySlots();
+}
+function drop(element,fn,onLibrary=null){
+ element.addEventListener('dragover',e=>{e.preventDefault();e.stopPropagation();element.classList.add('drag');});element.addEventListener('dragleave',()=>element.classList.remove('drag'));
+ element.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();element.classList.remove('drag');const id=e.dataTransfer.getData(LIBRARY_MIME);if(id&&onLibrary){onLibrary(id);return;}const f=e.dataTransfer.files[0];if(f)fn(f);});
+}
+async function readURL(file){return new Promise((res,rej)=>{const f=new FileReader();f.onload=()=>res(f.result);f.onerror=()=>rej(new Error('Could not read that file.'));f.readAsDataURL(file);});}
+async function decode(url){if(!/^data:image\/png;base64,/.test(url))throw new Error('Please use a PNG image.');const blob=await(await fetch(url)).blob();const header=new DataView(await blob.slice(0,24).arrayBuffer());if(header.byteLength<24||header.getUint32(0)!==0x89504e47)throw new Error('This is not a valid PNG file.');const w=header.getUint32(16),h=header.getUint32(20);if(!w||!h||w*h>maxPixels||w>gl.getParameter(gl.MAX_TEXTURE_SIZE)||h>gl.getParameter(gl.MAX_TEXTURE_SIZE))throw new Error('Image exceeds the viewer limit: 16 million source pixels, with each side within your GPU texture limit.');return createImageBitmap(blob,{premultiplyAlpha:'none',colorSpaceConversion:'none'});}
+function reconcileMaterials(previous,next,preserve=true){
+ const byShade=new Map(preserve?previous.map(p=>[p.key,p]):[]),retainedImages=new Set();
+ let kept=0,added=0;
+ for(const p of next){
+  if(p.key==='air')continue;
+  const old=byShade.get(p.key);
+  if(old?.image&&old.url){
+   // Carry only the material; the new image owns counts, shade IDs, and layout.
+   Object.assign(p,{image:old.image,url:old.url,name:old.name,demo:!!old.demo});
+   retainedImages.add(old.image);kept++;
+  }else added++;
+ }
+ for(const p of previous)if(p.image&&!retainedImages.has(p.image))p.image.close();
+ return {kept,added};
+}
+async function importURL(url,name,{preserveMaterials=true,settings=null}={}){
+ status('Reading source image…');clearTimeout(quantTimer);
+ const image=await decodeSource(url),c=smallCanvas(image.width,image.height),ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0);image.close();
+ const pixels=ctx.getImageData(0,0,c.width,c.height).data,normalizedSource=c.toDataURL('image/png');
+ const loaded=await work('source',{data:pixels.buffer,width:c.width,height:c.height},[pixels.buffer]);
+ editorSource=loaded.info;sourcePixels=loaded.premult;sourceURL=normalizedSource;sourceName=name;
+ sourceTexture=texture2D(4,sourceTexture,gl.RGBA8,c.width,c.height,sourcePixels);
+ if(settings)editorSettings=normalizeSettings(settings);
+ else{
+  const existing=editorSource.grayscale&&editorSource.values.length<=16;
+  editorSettings=normalizeSettings({...editorSettings,enabled:!existing,black:0,white:255,gamma:1,steps:existing&&editorSource.values.length>=2?editorSource.values.length:editorSettings.steps});
+ }
+ quantRevision++;const requested=quantRevision,result=await work('quantize',{settings:editorSettings});
+ await installQuantized(result,{preserveMaterials,fitView:true});quantApplied=requested;appliedSettings={...result.settings};
+ $('imageName').textContent=name;syncEditorUI();showPanel(editorSettings.enabled?'image':'materials');if(settings===null&&!state.palette.some(p=>p.image)){$('previewMode').value='1';schedule();}
+ if(settings===null&&editorSource.transparent)toast('Pixels below 50% opacity become empty space.');
+}
+async function assignURL(i,url,name,demo=false){const image=await decode(url);if(image.width!==image.height||image.width<8||image.width>256||(image.width&(image.width-1))!==0){image.close();throw new Error('Block textures must be square PNGs sized 8, 16, 32, 64, 128, or 256 pixels.');}const p=state.palette[i];p.image?.close();Object.assign(p,{image,url,name,demo});}
+async function assignTexture(i,file){await assignURL(i,await readURL(file),file.name.replace(/\.png$/i,''));renderPalette();await rebuildMaterials();toast('Material updated.');}
+async function loadDemo(){const d=demoPixels();await importURL(pixelsURL(d.data,d.width,d.height),'Castle study · demo',{preserveMaterials:false,settings:{enabled:false}});const names=['Deep slate','Weathered brick','Stone brick','Rough stone','Pale stone','Limestone'];for(let i=0;i<state.palette.length;i++){const p=state.palette[i];if(p.key==='air')continue;const k=[30,70,110,150,190,230].indexOf(p.gray),data=new Uint8ClampedArray(16*16*4);let seed=73+k*927;for(let y=0;y<16;y++)for(let x=0;x<16;x++){seed=(seed*1664525+1013904223)>>>0;const noise=((seed>>>24)/255-.5)*24,mortar=y%8===0||(x+(y>=8?8:0))%16===0;const base=p.gray-8+(mortar?-23:noise);const j=(y*16+x)*4;data.set([Math.max(0,base+2),Math.max(0,base+3),Math.max(0,base-5),255],j);}await assignURL(i,pixelsURL(data,16,16),`${names[k]} · demo`,true);}renderPalette();await rebuildMaterials();}
+function download(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);}
+function saveProject(){
+ if(!state)return;if(quantApplied!==quantRevision)return toast('Wait for the image adjustment to finish.');
+ const project={version:2,name:sourceName,image:sourceURL,quantization:{...appliedSettings},materials:state.palette.map(p=>({key:p.key,name:p.name,texture:p.url||null,demo:!!p.demo})),view,grid:$('grid').checked,previewMode:$('previewMode').value,clip:$('clipToggle').checked,averageColors:$('blueprint').checked};
+ download(new Blob([JSON.stringify(project)],{type:'application/json'}),'litho-wall-project.json');toast('Project saved with its source, adjustments and textures.');
+}
+async function openProject(file){
+ if(file.size>100_000_000)throw new Error('Project file is too large (100 MB limit).');const p=JSON.parse(await file.text());
+ if(![1,2].includes(p.version)||typeof p.image!=='string'||!Array.isArray(p.materials))throw new Error('This is not a supported Litho project.');
+ await importURL(p.image,typeof p.name==='string'?p.name:'Imported project',{preserveMaterials:false,settings:p.version===2?normalizeSettings(p.quantization||{}):normalizeSettings({enabled:false})});
+ for(const m of p.materials){const i=state.palette.findIndex(s=>s.key===m.key);if(i>=0&&m.key!=='air'&&m.texture)await assignURL(i,m.texture,typeof m.name==='string'?m.name:'Block texture',!!m.demo);}
+ renderPalette();await rebuildMaterials();if(p.view&&[p.view.x,p.view.y,p.view.scale].every(Number.isFinite)&&p.view.scale>=.01&&p.view.scale<=1024)view={...p.view};
+ $('grid').checked=!!p.grid;$('previewMode').value=['0','1','2'].includes(p.previewMode)?p.previewMode:'0';$('clipToggle').checked=!!p.clip;$('blueprint').checked=!!p.averageColors;schedule();toast('Project restored.');
+}
+// Streaming PNG export avoids allocating a texture-expanded wall in memory.
+const crcTable=Uint32Array.from({length:256},(_,n)=>{for(let k=0;k<8;k++)n=n&1?0xedb88320^(n>>>1):n>>>1;return n>>>0;});
+function pngChunk(type,data){const out=new Uint8Array(data.length+12),v=new DataView(out.buffer);v.setUint32(0,data.length);for(let i=0;i<4;i++)out[4+i]=type.charCodeAt(i);out.set(data,8);let crc=0xffffffff;for(let i=4;i<out.length-4;i++)crc=crcTable[(crc^out[i])&255]^(crc>>>8);v.setUint32(out.length-4,(crc^0xffffffff)>>>0);return out;}
+async function exportPNG(){
+ if(!state)return;if(!window.CompressionStream)throw new Error('PNG export needs a current Chrome, Edge, Firefox, or Safari browser.');const w=state.width*textureSize,h=state.height*textureSize;if(w*h>256_000_000)throw new Error('Full PNG export is limited to 256 million pixels. Viewing and saving the project still work.');
+ const head=new Uint8Array(13),dv=new DataView(head.buffer);dv.setUint32(0,w);dv.setUint32(4,h);head[8]=8;head[9]=6;const parts=[new Uint8Array([137,80,78,71,13,10,26,10]),pngChunk('IHDR',head)];
+ const stream=new CompressionStream('deflate'),writer=stream.writable.getWriter(),reader=stream.readable.getReader();const consuming=(async()=>{while(true){const {value,done}=await reader.read();if(done)break;parts.push(pngChunk('IDAT',value));}})();$('export').disabled=true;
+ try{for(let y=0;y<h;y++){const row=new Uint8Array(1+w*4),by=Math.floor(y/textureSize),ty=y%textureSize;for(let bx=0;bx<state.width;bx++){const p=state.palette[state.map[by*state.width+bx]];row.set(p.normalized.subarray(ty*textureSize*4,(ty+1)*textureSize*4),1+bx*textureSize*4);}await writer.write(row);if(y%64===0){status(`Exporting PNG · ${Math.round(y/h*100)}%`);await new Promise(r=>setTimeout(r,0));}}await writer.close();await consuming;parts.push(pngChunk('IEND',new Uint8Array()));download(new Blob(parts,{type:'image/png'}),'litho-wall.png');status('PNG exported');toast(`Exported ${w.toLocaleString()} × ${h.toLocaleString()} pixels.`);}finally{$('export').disabled=false;}
+}
+function normalizeSettings(input={}){
+ const finite=(v,f)=>Number.isFinite(Number(v))?Number(v):f,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const black=Math.round(clamp(finite(input.black,0),0,253)),white=Math.round(clamp(finite(input.white,255),black+2,255));
+ return {enabled:input.enabled!==false,steps:Math.round(clamp(finite(input.steps,6),2,16)),blur:clamp(finite(input.blur,0),0,10),black,white,gamma:clamp(finite(input.gamma,1),.1,10),grain:clamp(finite(input.grain,0),0,100),dither:['none','floyd','atkinson','ordered','stucki'].includes(input.dither)?input.dither:'none',strength:clamp(finite(input.strength,100),0,100),seed:finite(input.seed,146921)>>>0};
+}
+
+let editorSource=null,sourcePixels=null,grayPixels=null,grayTexture=null,sourceTexture=null;
+let editorSettings=normalizeSettings({enabled:false}),appliedSettings={...editorSettings};
+let quantRevision=0,quantApplied=0,quantRunning=false,quantTimer=0,activeLevelHandle=null;
+function showPanel(which){for(const name of ['image','materials']){$(name+'Panel').hidden=name!==which;$(name+'Tab').setAttribute('aria-selected',String(name===which));}}
+function syncEditorUI(){
+ editorSettings=normalizeSettings(editorSettings);const s=editorSettings;
+ $('quantizeEnabled').checked=s.enabled;$('quantizeControls').disabled=!s.enabled;
+ $('blurSlider').value=s.blur;$('blurValue').textContent=s.blur.toFixed(1)+' px';
+ $('blackPoint').value=s.black;$('blackValue').textContent=s.black;$('whitePoint').value=s.white;$('whiteValue').textContent=s.white;
+ $('gammaPoint').value=100+100*Math.log10(s.gamma);$('gammaValue').textContent=s.gamma.toFixed(2);
+ $('grainSlider').value=s.grain;$('grainValue').textContent=s.grain;$('ditherMode').value=s.dither;
+ $('ditherStrength').value=s.strength;$('ditherValue').textContent=s.strength+'%';$('stepsSlider').value=s.steps;$('stepsValue').textContent=s.steps;
+ $('ditherStrength').disabled=s.dither==='none';
+ $('inputModeNote').textContent=s.enabled?'Blur → levels → grain → dithering → fixed grayscale shades.':'Original grayscale values are preserved. Enable quantization to edit blur, levels, grain and dithering.';
+ refreshHistogram();
+}
+function updateUsage(result){
+ if(editorSource&&result.inputHistogram){editorSource.histogram=result.inputHistogram;refreshHistogram();}
+ const opaque=result.palette.filter(p=>p.key!=='air').reduce((n,p)=>n+p.count,0),count=gray=>result.palette.find(p=>p.key===String(gray))?.count||0;
+ $('shadeUsage').textContent=result.settings.enabled?`${result.used} of ${result.settings.steps} shades used · ${result.width} × ${result.height} blocks`:`${result.used} original grayscale shades · ${result.width} × ${result.height} blocks`;
+ const pct=n=>opaque?(n/opaque*100).toFixed(1):'0.0';
+ $('clipSummary').textContent=`Output black ${pct(count(0))}% · white ${pct(count(255))}%. Blue = black, red = white. Preview only.`;
+}
+function refreshHistogram(){
+ const c=$('histCanvas'),handles=$('handleCanvas');if(!c||!handles)return;
+ const dpr=window.devicePixelRatio||1,w=Math.max(120,Math.round((c.clientWidth||272)*dpr)),h=Math.round(78*dpr),hh=Math.round(28*dpr);c.width=w;c.height=h;handles.width=w;handles.height=hh;
+ const ctx=c.getContext('2d'),hd=handles.getContext('2d'),hist=editorSource?.histogram||new Uint32Array(256);let max=0;for(const n of hist)max=Math.max(max,n);
+ ctx.fillStyle='#121b14';ctx.fillRect(0,0,w,h);ctx.fillStyle='#91ac7c';for(let i=0;i<256;i++){const bar=max?Math.log1p(hist[i])/Math.log1p(max)*(h-5*dpr):0;ctx.fillRect(i*w/256,h-bar,w/256+1,bar);}
+ const {black,white,gamma}=editorSettings;ctx.fillStyle='#0005';ctx.fillRect(0,0,black/255*w,h);ctx.fillRect(white/255*w,0,(255-white)/255*w,h);
+ hd.fillStyle='#172019';hd.fillRect(0,0,w,hh);const ramp=hd.createLinearGradient(0,0,w,0);ramp.addColorStop(0,'#000');ramp.addColorStop(1,'#fff');hd.fillStyle=ramp;hd.fillRect(0,0,w,hh*.36);
+ const mid=black+(white-black)*(1-Math.log10(gamma))/2;
+ for(const [value,color] of [[black,'#111'],[mid,'#a1ac99'],[white,'#eee']]){const x=Math.max(5*dpr,Math.min(w-5*dpr,value/255*w));hd.beginPath();hd.moveTo(x,hh*.4);hd.lineTo(x-5*dpr,hh-2*dpr);hd.lineTo(x+5*dpr,hh-2*dpr);hd.closePath();hd.fillStyle=color;hd.fill();hd.strokeStyle='#8ba279';hd.lineWidth=dpr;hd.stroke();}
+}
+function queueQuantization(){syncEditorUI();quantRevision++;status('Updating preview…');clearTimeout(quantTimer);quantTimer=setTimeout(processQuantization,90);}
+async function processQuantization(){
+ if(!editorSource||quantRunning||busy||quantApplied===quantRevision)return;
+ quantRunning=true;busy=true;
+ try{
+  while(quantApplied!==quantRevision){const requested=quantRevision,snapshot={...editorSettings};const result=await work('quantize',{settings:snapshot});if(requested!==quantRevision)continue;await installQuantized(result,{preserveMaterials:true});quantApplied=requested;appliedSettings={...result.settings};}
+ }catch(e){quantApplied=quantRevision;editorSettings={...appliedSettings};syncEditorUI();toast(e.message);status('Adjustment failed · previous preview kept');console.error(e);}
+ finally{quantRunning=false;busy=false;if(quantApplied!==quantRevision)processQuantization();}
+}
+async function installQuantized(result,{preserveMaterials=true,fitView=false}={}){
+ const previous=state?.palette||[];reconcileMaterials(previous,result.palette,preserveMaterials);
+ state={width:result.width,height:result.height,map:result.map,palette:result.palette};grayPixels=result.rgba;
+ selected=0;mapTexture=texture2D(0,mapTexture,gl.R8UI,state.width,state.height,state.map);grayTexture=texture2D(3,grayTexture,gl.RGBA8,state.width,state.height,grayPixels);
+ $('dimensions').textContent=`${state.width} × ${state.height}`;$('wallSummary').textContent=`${state.palette.filter(p=>p.key!=='air').reduce((n,p)=>n+p.count,0).toLocaleString()} blocks`;
+ renderPalette();await rebuildMaterials();updateUsage(result);if(fitView)fit();else schedule();
+}
+async function decodeSource(url){
+ if(!/^data:image\/(png|jpeg|webp|gif|bmp|avif);base64,/i.test(url))throw new Error('Use a PNG, JPG, WebP, GIF, BMP or AVIF image.');
+ const blob=await(await fetch(url)).blob(),image=await createImageBitmap(blob,{premultiplyAlpha:'none',colorSpaceConversion:'none'});
+ if(!image.width||!image.height||image.width*image.height>maxPixels||image.width>gl.getParameter(gl.MAX_TEXTURE_SIZE)||image.height>gl.getParameter(gl.MAX_TEXTURE_SIZE)){image.close();throw new Error('Image exceeds the viewer limit: 16 million source pixels, with each side within your GPU texture limit.');}
+ return image;
+}
+async function downloadGrayscale(){
+ if(!state||!grayPixels)return;const c=smallCanvas(state.width,state.height);c.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(grayPixels),state.width,state.height),0,0);
+ const blob=await new Promise(resolve=>c.toBlob(resolve,'image/png'));if(!blob)throw new Error('Could not create the grayscale PNG.');
+ const stem=sourceName.replace(/\.[^.]+$/,'')||'wall';download(blob,`${stem}_${appliedSettings.enabled?appliedSettings.steps+'_levels':'grayscale'}.png`);toast('Grayscale PNG downloaded at the original image size.');
+}
+function resetEditor(){editorSettings=normalizeSettings({enabled:true,steps:6});queueQuantization();}
+function connectEditor(){
+ $('imageTab').onclick=()=>{showPanel('image');refreshHistogram();};$('materialsTab').onclick=()=>{showPanel('materials');$('previewMode').value='0';schedule();};
+ $('quantizeEnabled').onchange=()=>{editorSettings.enabled=$('quantizeEnabled').checked;queueQuantization();};
+ for(const [id,key] of [['blurSlider','blur'],['blackPoint','black'],['whitePoint','white'],['grainSlider','grain'],['stepsSlider','steps'],['ditherStrength','strength']])$(id).oninput=()=>{
+  const value=Number($(id).value);if(key==='black')editorSettings.black=Math.min(value,editorSettings.white-2);else if(key==='white')editorSettings.white=Math.max(value,editorSettings.black+2);else editorSettings[key]=value;queueQuantization();
+ };
+ $('gammaPoint').oninput=()=>{editorSettings.gamma=Math.pow(10,(Number($('gammaPoint').value)-100)/100);queueQuantization();};
+ $('ditherMode').onchange=()=>{editorSettings.dither=$('ditherMode').value;queueQuantization();};
+ $('clipToggle').onchange=schedule;$('previewMode').onchange=()=>{schedule();};
+ $('resetAdjustments').onclick=resetEditor;$('reseed').onclick=()=>{editorSettings.seed=(editorSettings.seed+104729)>>>0;queueQuantization();};
+ $('autoRange').onclick=()=>{if(!editorSource?.opaque)return;let lo=0,hi=255;while(lo<255&&!editorSource.histogram[lo])lo++;while(hi>0&&!editorSource.histogram[hi])hi--;editorSettings.black=Math.min(lo,253);editorSettings.white=Math.max(hi,editorSettings.black+2);editorSettings.gamma=1;queueQuantization();};
+ $('downloadGray').onclick=()=>{if(quantApplied!==quantRevision)return toast('Wait for the image adjustment to finish.');safely(downloadGrayscale);};
+ const handle=$('handleCanvas');
+ handle.addEventListener('pointerdown',e=>{
+  if(!editorSettings.enabled)return;const r=handle.getBoundingClientRect(),v=(e.clientX-r.left)/r.width*255,{black,white,gamma}=editorSettings,mid=black+(white-black)*(1-Math.log10(gamma))/2;
+  activeLevelHandle=[['black',Math.abs(v-black)],['gamma',Math.abs(v-mid)],['white',Math.abs(v-white)]].sort((a,b)=>a[1]-b[1])[0][0];handle.setPointerCapture(e.pointerId);dragLevel(e);
+ });
+ function dragLevel(e){if(!activeLevelHandle)return;const r=handle.getBoundingClientRect(),v=Math.max(0,Math.min(255,(e.clientX-r.left)/r.width*255));if(activeLevelHandle==='black')editorSettings.black=Math.min(Math.round(v),editorSettings.white-2);else if(activeLevelHandle==='white')editorSettings.white=Math.max(Math.round(v),editorSettings.black+2);else editorSettings.gamma=Math.pow(10,1-2*Math.max(0,Math.min(1,(v-editorSettings.black)/(editorSettings.white-editorSettings.black))));queueQuantization();}
+ handle.addEventListener('pointermove',dragLevel);handle.addEventListener('pointerup',()=>activeLevelHandle=null);handle.addEventListener('pointercancel',()=>activeLevelHandle=null);
+ new ResizeObserver(refreshHistogram).observe($('imagePanel'));window.addEventListener('resize',refreshHistogram);syncEditorUI();
+}
+
+const LIBRARY_MANIFEST='./textures/index.json';
+const LIBRARY_MIME='application/x-litho-block';
+let blockLibrary=[],libraryTargetKey=null,libraryLoaded=false,libraryLoading=false,libraryGeneration=0;
+const localLibraryFiles=new Map(),libraryURLs=new Set(),libraryBlobCache=new Map();
+function normalizeLibraryIndex(index){
+ const rows=Array.isArray(index)?index:index?.textures;
+ if(!Array.isArray(rows))throw new Error('textures/index.json must be a JSON array of PNG filenames, or an object with a textures array.');
+ const entries=[],seen=new Set();
+ for(const row of rows){
+  const filename=typeof row==='string'?row:row?.file||row?.filename;
+  if(typeof filename!=='string'||!filename.toLowerCase().endsWith('.png')||filename.startsWith('/')||filename.includes('\\')||filename.split('/').some(p=>p==='..'||p==='.'||!p)||/[?#:\x00-\x1f]/.test(filename))throw new Error('The texture list contains an invalid PNG filename. Use paths relative to the textures folder.');
+  if(seen.has(filename))continue;seen.add(filename);
+  const id=filename,name=typeof row==='object'&&typeof row.name==='string'?row.name:filename.split('/').pop().replace(/\.png$/i,'').replace(/[_-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  entries.push({id,file:filename,name,brightness:null,opaque:null,valid:null});
+ }
+ return entries;
+}
+function libraryImageURL(entry){
+ if(entry.localURL)return entry.localURL;
+ const base=new URL('./textures/',window.location.href);
+ return new URL(entry.file.split('/').map(encodeURIComponent).join('/'),base).href;
+}
+function refreshLibrarySlots(){
+ const select=$('librarySlot');if(!select)return;select.replaceChildren();
+ const slots=(state?.palette||[]).filter(p=>p.key!=='air');
+ if(!slots.some(p=>p.key===libraryTargetKey))libraryTargetKey=slots[0]?.key||null;
+ for(const p of slots){const option=document.createElement('option');option.value=p.key;option.textContent=`Gray ${p.gray} — ${p.url?p.name:'unassigned'}`;select.append(option);}
+ select.value=libraryTargetKey||'';
+}
+function openBlockLibrary(shade=null){
+ if(shade!==null)libraryTargetKey=shade;showPanel('materials');$('libraryDrawer').hidden=false;document.querySelector('main').classList.add('library-open');refreshLibrarySlots();renderPalette();schedule();
+ if(!libraryLoaded&&!libraryLoading)loadBlockLibrary();
+}
+function closeBlockLibrary(){$('libraryDrawer').hidden=true;document.querySelector('main').classList.remove('library-open');renderPalette();schedule();}
+function filteredLibrary(entries,query,sort,opaqueOnly){
+ const words=query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+ return entries.filter(e=>e.valid!==false&&(!opaqueOnly||e.opaque!==false)&&words.every(w=>(e.name+' '+e.file).toLowerCase().includes(w))).sort((a,b)=>{
+  if(sort==='dark'||sort==='light'){if(a.brightness===null&&b.brightness!==null)return 1;if(a.brightness!==null&&b.brightness===null)return -1;if(a.brightness!==null&&b.brightness!==null){const d=a.brightness-b.brightness;if(d)return sort==='dark'?d:-d;}}
+  return a.name.localeCompare(b.name,undefined,{numeric:true});
+ });
+}
+function renderBlockLibrary(){
+ const grid=$('libraryGrid');if(!grid)return;const scroll=grid.scrollTop;grid.replaceChildren();
+ const visible=filteredLibrary(blockLibrary,$('librarySearch').value,$('librarySort').value,$('libraryOpaque').checked);
+ for(const entry of visible){
+  const card=document.createElement('button');card.className='library-card';card.draggable=true;card.title=`${entry.name}\n${entry.file}\nClick to assign or drag onto a palette slot.`;card.dataset.block=entry.id;
+  const img=document.createElement('img');img.src=libraryImageURL(entry);img.alt='';img.loading='lazy';img.decoding='async';img.draggable=false;
+  const name=document.createElement('span');name.className='block-name';name.textContent=entry.name;card.append(img,name);
+  card.onclick=()=>assignLibraryToShade(libraryTargetKey,entry.id);
+  card.addEventListener('dragstart',e=>{e.dataTransfer.effectAllowed='copy';e.dataTransfer.setData(LIBRARY_MIME,entry.id);e.dataTransfer.setData('text/plain',entry.name);});
+  grid.append(card);
+ }
+ grid.scrollTop=scroll;
+ const invalid=blockLibrary.filter(e=>e.valid===false).length,checking=blockLibrary.some(e=>e.valid===null);
+ $('libraryStatus').textContent=blockLibrary.length?`${visible.length} of ${blockLibrary.length-invalid} textures${checking?' · checking images…':''}${invalid?' · '+invalid+' skipped (missing or not 16×16)':''}`:'No textures loaded.';
+ $('libraryEmpty').hidden=blockLibrary.length>0;
+ if(blockLibrary.length&&!visible.length){const p=document.createElement('p');p.className='library-status';p.textContent='No blocks match this search or filter.';grid.append(p);}
+}
+async function getLibraryBlob(entry){
+ if(localLibraryFiles.has(entry.id))return localLibraryFiles.get(entry.id);
+ if(libraryBlobCache.has(entry.id))return libraryBlobCache.get(entry.id);
+ const response=await fetch(libraryImageURL(entry));if(!response.ok)throw new Error(`Could not load ${entry.file} (${response.status}). Check the filename and letter case.`);
+ const blob=await response.blob();libraryBlobCache.set(entry.id,blob);return blob;
+}
+async function inspectLibraryEntry(entry){
+ const blob=await getLibraryBlob(entry),bitmap=await createImageBitmap(blob,{premultiplyAlpha:'none',colorSpaceConversion:'none'});
+ if(bitmap.width!==16||bitmap.height!==16){bitmap.close();throw new Error('Not a 16×16 PNG.');}
+ const c=smallCanvas(16),ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(bitmap,0,0);bitmap.close();const pixels=ctx.getImageData(0,0,16,16).data;
+ let total=0,weights=0,opaque=true;for(let j=0;j<pixels.length;j+=4){const a=pixels[j+3]/255;total+=(.2126*pixels[j]+.7152*pixels[j+1]+.0722*pixels[j+2])*a;weights+=a;if(pixels[j+3]!==255)opaque=false;}
+ entry.brightness=weights?total/weights:0;entry.opaque=opaque;entry.valid=true;
+}
+async function inspectBlockLibrary(generation){
+ let cursor=0;
+ async function batch(){while(cursor<blockLibrary.length&&generation===libraryGeneration){const entry=blockLibrary[cursor++];try{await inspectLibraryEntry(entry);}catch(e){entry.valid=false;}if(cursor%32===0){$('libraryStatus').textContent=`Checking images · ${cursor} / ${blockLibrary.length}`;await new Promise(r=>setTimeout(r,0));}}}
+ await Promise.all([batch(),batch(),batch(),batch()]);if(generation===libraryGeneration)renderBlockLibrary();
+}
+function clearLibraryResources(){for(const u of libraryURLs)URL.revokeObjectURL(u);libraryURLs.clear();localLibraryFiles.clear();libraryBlobCache.clear();}
+async function loadBlockLibrary(){
+ if(libraryLoading)return;libraryLoading=true;const generation=++libraryGeneration;$('libraryStatus').textContent='Loading textures/index.json…';
+ try{
+  if(window.location.protocol==='file:')throw new Error('For a local test, choose Create texture list and select your folder. Hosted pages load textures/index.json automatically.');
+  const response=await fetch(LIBRARY_MANIFEST,{cache:'no-cache'});if(!response.ok)throw new Error('Could not find textures/index.json. Use Create texture list to generate it from your folder.');
+  const entries=normalizeLibraryIndex(await response.json());clearLibraryResources();blockLibrary=entries;libraryLoaded=true;renderBlockLibrary();await inspectBlockLibrary(generation);
+ }catch(e){libraryLoaded=false;blockLibrary=[];renderBlockLibrary();$('libraryStatus').textContent=e.message;}
+ finally{libraryLoading=false;}
+}
+async function assignLibraryToShade(shade,id){
+ if(!shade)return toast('Choose a palette slot first.');const entry=blockLibrary.find(e=>e.id===id);if(!entry||entry.valid===false)return toast('That texture could not be loaded.');
+ await safely(async()=>{
+  const blob=await getLibraryBlob(entry);if(entry.valid!==true)await inspectLibraryEntry(entry);
+  const index=state.palette.findIndex(p=>p.key===shade&&p.key!=='air');if(index<0)throw new Error('That grayscale shade is no longer in the palette.');
+  await assignURL(index,await readURL(new Blob([blob],{type:'image/png'})),entry.name);renderPalette();await rebuildMaterials();$('previewMode').value='0';schedule();toast(`${entry.name} assigned to gray ${shade}.`);
+ });
+}
+async function createTextureList(files){
+ if(libraryLoading)return toast('Wait for the current library load to finish.');libraryLoading=true;const generation=++libraryGeneration;
+ try{
+  $('libraryStatus').textContent='Reading your folder…';const entries=[],picked=[];const seen=new Set();
+  for(const file of files){
+   if(!file.name.toLowerCase().endsWith('.png'))continue;
+   const relative=file.webkitRelativePath||file.name,path=relative.includes('/')?relative.slice(relative.indexOf('/')+1):relative;
+   if(seen.has(path))continue;const bytes=await file.slice(0,24).arrayBuffer();if(bytes.byteLength<24)continue;const h=new DataView(bytes);
+   if(h.getUint32(0)!==0x89504e47||h.getUint32(16)!==16||h.getUint32(20)!==16)continue;
+   const [entry]=normalizeLibraryIndex([path]);entries.push(entry);picked.push(file);seen.add(path);
+  }
+  if(!entries.length)throw new Error('No 16×16 PNGs were found in that folder.');
+  clearLibraryResources();blockLibrary=entries;libraryLoaded=true;
+  entries.forEach((entry,i)=>{localLibraryFiles.set(entry.id,picked[i]);entry.localURL=URL.createObjectURL(picked[i]);libraryURLs.add(entry.localURL);});
+  download(new Blob([JSON.stringify(entries.map(e=>e.file).sort(),null,2)+'\n'],{type:'application/json'}),'index.json');
+  renderBlockLibrary();toast(`Created index.json for ${entries.length} PNGs. Put it inside your textures folder when uploading to GitHub.`);await inspectBlockLibrary(generation);
+ }catch(e){toast(e.message);$('libraryStatus').textContent=e.message;}
+ finally{libraryLoading=false;}
+}
+function connectBlockLibrary(){
+ $('browseBlockLibrary').onclick=()=>openBlockLibrary();$('closeLibrary').onclick=closeBlockLibrary;
+ $('librarySlot').onchange=()=>{libraryTargetKey=$('librarySlot').value;renderPalette();};
+ $('librarySearch').oninput=renderBlockLibrary;$('librarySort').value='name';$('librarySort').onchange=renderBlockLibrary;$('libraryOpaque').onchange=renderBlockLibrary;
+ $('createTextureList').onclick=()=>$('textureFolderInput').click();$('textureFolderInput').onchange=e=>{const files=Array.from(e.target.files||[]);if(files.length)createTextureList(files);e.target.value='';};
+ $('reloadLibrary').onclick=loadBlockLibrary;
+ $('libraryUpload').onclick=()=>{if(!libraryTargetKey)return toast('Choose a palette slot first.');$('textureInput').dataset.shade=libraryTargetKey;$('textureInput').click();};
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('libraryDrawer').hidden)closeBlockLibrary();});
+}
+
+const pointers=new Map();let gesture=null;
+viewport.addEventListener('pointerdown',e=>{if(e.target!==canvas||e.button>0)return;viewport.focus();viewport.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});gesture={view:{...view},points:[...pointers.values()]};viewport.classList.add('dragging');});
+viewport.addEventListener('pointermove',e=>{if(pointers.has(e.pointerId)){pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});const ps=[...pointers.values()];if(ps.length===1&&gesture.points.length===1){view={...gesture.view,x:gesture.view.x+ps[0].x-gesture.points[0].x,y:gesture.view.y+ps[0].y-gesture.points[0].y};}else if(ps.length===2&&gesture.points.length===2){const rect=viewport.getBoundingClientRect(),dist=p=>Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y),old=gesture.points;const cx=(old[0].x+old[1].x)/2-rect.left,cy=(old[0].y+old[1].y)/2-rect.top;view=zoomAt(gesture.view,dist(ps)/Math.max(1,dist(old)),cx,cy);view.x+=(ps[0].x+ps[1].x-old[0].x-old[1].x)/2;view.y+=(ps[0].y+ps[1].y-old[0].y-old[1].y)/2;}schedule();}if(state){const r=viewport.getBoundingClientRect(),x=Math.floor((e.clientX-r.left-view.x)/view.scale),y=Math.floor((e.clientY-r.top-view.y)/view.scale);$('hover').textContent=x>=0&&y>=0&&x<state.width&&y<state.height?`x ${x} · y ${y} · ${state.palette[state.map[y*state.width+x]].name}`:'Hover to inspect a block';}});
+function endPointer(e){pointers.delete(e.pointerId);gesture={view:{...view},points:[...pointers.values()]};if(!pointers.size)viewport.classList.remove('dragging');}
+viewport.addEventListener('pointerup',endPointer);viewport.addEventListener('pointercancel',endPointer);
+viewport.addEventListener('wheel',e=>{e.preventDefault();const r=viewport.getBoundingClientRect(),amount=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?viewport.clientHeight:1);zoom(Math.exp(-Math.max(-250,Math.min(250,amount))*.002),e.clientX-r.left,e.clientY-r.top);},{passive:false});
+viewport.addEventListener('keydown',e=>{if(e.target!==viewport)return;if(['+','=','-','f','F','0','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))e.preventDefault();if(e.key==='+'||e.key==='=')zoom(1.4);if(e.key==='-')zoom(1/1.4);if(e.key==='f'||e.key==='F')fit();if(e.key==='0')actual();if(e.key.startsWith('Arrow')){view.x+=e.key==='ArrowLeft'?40:e.key==='ArrowRight'?-40:0;view.y+=e.key==='ArrowUp'?40:e.key==='ArrowDown'?-40:0;schedule();}});
+new ResizeObserver(schedule).observe(viewport);window.addEventListener('resize',schedule);
+$('plus').onclick=()=>zoom(1.4);$('minus').onclick=()=>zoom(1/1.4);$('fit').onclick=fit;$('actual').onclick=actual;$('zoomLabel').onclick=actual;$('grid').onchange=schedule;$('blueprint').onchange=schedule;
+$('importImage').onclick=()=>$('imageInput').click();$('imageInput').onchange=e=>{const f=e.target.files[0];if(f)safely(async()=>{await importURL(await readURL(f),f.name);});e.target.value='';};
+$('textureInput').onchange=e=>{const f=e.target.files[0];if(f){const shade=$('textureInput').dataset.shade,index=state.palette.findIndex(p=>p.key===shade);if(index>=0)safely(()=>assignTexture(index,f));else toast('That shade is no longer in the palette.');}e.target.value='';};
+$('openProject').onclick=()=>$('projectInput').click();$('projectInput').onchange=e=>{const f=e.target.files[0];if(f)safely(()=>openProject(f));e.target.value='';};$('saveProject').onclick=()=>{if(busy)return toast('Wait for the import to finish before saving.');saveProject();};$('export').onclick=()=>{if(quantApplied!==quantRevision)return toast('Wait for the image adjustment to finish.');safely(exportPNG);};$('demo').onclick=()=>safely(loadDemo);
+$('help').onclick=()=>$('helpDialog').showModal();$('closeHelp').onclick=()=>$('helpDialog').close();drop($('importImage'),f=>safely(async()=>importURL(await readURL(f),f.name)));drop(viewport,f=>safely(async()=>f.name.endsWith('.json')?openProject(f):importURL(await readURL(f),f.name)));
+canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();status('Graphics context paused');});canvas.addEventListener('webglcontextrestored',()=>safely(async()=>{initGL();if(!state)return;mapTexture=texture2D(0,null,gl.R8UI,state.width,state.height,state.map);if(grayPixels)grayTexture=texture2D(3,null,gl.RGBA8,state.width,state.height,grayPixels);if(sourcePixels)sourceTexture=texture2D(4,null,gl.RGBA8,state.width,state.height,sourcePixels);await rebuildMaterials();toast('Graphics restored.');}));
+connectEditor();connectBlockLibrary();
+if(!gl){status('WebGL2 unavailable');toast('Enable hardware acceleration in your browser to use this viewer.');}else {try{initGL();safely(loadDemo);}catch(e){status('Renderer could not start');toast(e.message);console.error(e);}}
+
+</script>
+</body></html>
